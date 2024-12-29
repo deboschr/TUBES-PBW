@@ -1,13 +1,13 @@
-package com.pbw.run_tracker;
+package tubes.pbw.runtracker;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class RunTrackerApplication {
+public class RuntrackerApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(RunTrackerApplication.class, args);
+		SpringApplication.run(RuntrackerApplication.class, args);
 	}
 
 }

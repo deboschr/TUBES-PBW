@@ -1,10 +1,10 @@
-package com.pbw.run_tracker;
+package tubes.pbw.runtracker;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class RunTrackerApplicationTests {
+class RuntrackerApplicationTests {
 
 	@Test
 	void contextLoads() {
