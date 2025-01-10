@@ -1,0 +1,17 @@
+server:
+  error:
+    include-message: always
+    include-binding-errors: always
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5432/run-tracker
+    username: admin-run-tracker
+    password:
+jpa:
+  hibernater:
+    ddl-auto: create-drop
+  properties:
+    hibernate:
+      dialect: org.hibernate.dialect.PostgreSQLDialict
+      format_sql: true
+    show-sql: true
