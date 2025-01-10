@@ -12,7 +12,7 @@
 	<artifactId>runtracker</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>Run Tracker</name>
-	<description>Demo project for Spring Boot</description>
+	<description>Tugas Besar PBW</description>
 	<url/>
 	<licenses>
 		<license/>
@@ -72,6 +72,12 @@
 			<artifactId>spring-security-test</artifactId>
 			<scope>test</scope>
 		</dependency>
+		<dependency>
+    		<groupId>org.postgresql</groupId>
+    		<artifactId>postgresql</artifactId>
+    		<scope>runtime</scope>
+		</dependency>
+
 	</dependencies>
 
 	<build>
