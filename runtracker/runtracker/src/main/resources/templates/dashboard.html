@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+	<head>
+		<title>Dashboard</title>
+		<link rel="stylesheet" href="/css/index.css" />
+		<link rel="stylesheet" href="/css/navbar.css" />
+		<link rel="stylesheet" href="/css/dashboard.css" />
+	</head>
+	<body>
+		<!-- Include Navbar -->
+		<th:block th:include="fragments/navbar :: *"></th:block>
+
+		<main>
+			<h1>Welcome to Dashboard</h1>
+			<p>Your recent activity and stats will appear here.</p>
+		</main>
+
+		<!-- Script untuk interaksi -->
+		<script src="/js/navbar.js"></script>
+		<script src="/js/dashboard.js"></script>
+	</body>
+</html>
