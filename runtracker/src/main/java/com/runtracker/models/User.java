@@ -10,7 +10,6 @@ import java.util.Set;
 @Table(name = "pengguna")
 @Data
 @NoArgsConstructor
-@EntityListeners(AuditListener.class)
 public class User {
 
    @Id
@@ -31,25 +30,35 @@ public class User {
    @Column(nullable = false, length = 50)
    private Role role;
 
-   @Column(name = "created_at")
+   @Column(name = "created_at", nullable = false, updatable = false)
    private Long createdAt;
 
    @Column(name = "updated_at")
    private Long updatedAt;
 
-   @OneToMany(mappedBy = "pengguna", cascade = CascadeType.ALL)
+   @OneToMany(mappedBy = "pengguna", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
    private Set<Activity> activities;
 
-   @OneToMany(mappedBy = "creator", cascade = CascadeType.ALL)
+   @OneToMany(mappedBy = "creator", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
    private Set<Race> createdRaces;
 
-   @OneToMany(mappedBy = "updator", cascade = CascadeType.ALL)
+   @OneToMany(mappedBy = "updator", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
    private Set<Race> updatedRaces;
 
-   @OneToMany(mappedBy = "member", cascade = CascadeType.ALL)
+   @OneToMany(mappedBy = "member", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
    private Set<MemberRace> memberRaces;
 
    public enum Role {
       MEMBER, ADMIN
+   }
+
+   @PrePersist
+   public void prePersist() {
+      this.createdAt = System.currentTimeMillis();
+   }
+
+   @PreUpdate
+   public void preUpdate() {
+      this.updatedAt = System.currentTimeMillis();
    }
 }

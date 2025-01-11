@@ -8,7 +8,6 @@ import lombok.NoArgsConstructor;
 @Table(name = "activity")
 @Data
 @NoArgsConstructor
-@EntityListeners(AuditListener.class)
 public class Activity {
 
    @Id
@@ -32,12 +31,22 @@ public class Activity {
    @Column(nullable = false)
    private Double distance;
 
-   @Column(name = "created_at")
+   @Column(name = "created_at", nullable = false, updatable = false)
    private Long createdAt;
 
    @Column(name = "updated_at")
    private Long updatedAt;
 
-   @OneToOne(mappedBy = "activity")
+   @OneToOne(mappedBy = "activity", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
    private MemberRace memberRace;
+
+   @PrePersist
+   public void prePersist() {
+      this.createdAt = System.currentTimeMillis();
+   }
+
+   @PreUpdate
+   public void preUpdate() {
+      this.updatedAt = System.currentTimeMillis();
+   }
 }

@@ -28,6 +28,9 @@ public class ActivityController {
       }
 
       List<Activity> activities = activityService.getActivitiesByUser(user);
+
+      System.out.println(activities);
+
       model.addAttribute("title", "Activity");
       model.addAttribute("page", "activity");
       model.addAttribute("user", user);

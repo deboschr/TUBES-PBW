@@ -10,7 +10,6 @@ import java.util.Set;
 @Table(name = "race")
 @Data
 @NoArgsConstructor
-@EntityListeners(AuditListener.class)
 public class Race {
 
    @Id
@@ -32,15 +31,25 @@ public class Race {
    @Column(nullable = false)
    private String description;
 
-   @Column(nullable = false)
+   @Column(nullable = false, length = 50)
    private String status;
 
-   @Column(name = "created_at")
+   @Column(name = "created_at", nullable = false, updatable = false)
    private Long createdAt;
 
    @Column(name = "updated_at")
    private Long updatedAt;
 
-   @OneToMany(mappedBy = "race", cascade = CascadeType.ALL)
+   @OneToMany(mappedBy = "race", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
    private Set<MemberRace> memberRaces;
+
+   @PrePersist
+   public void prePersist() {
+      this.createdAt = System.currentTimeMillis();
+   }
+
+   @PreUpdate
+   public void preUpdate() {
+      this.updatedAt = System.currentTimeMillis();
+   }
 }

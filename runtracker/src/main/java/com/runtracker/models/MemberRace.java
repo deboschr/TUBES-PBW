@@ -8,8 +8,7 @@ import lombok.NoArgsConstructor;
 @Table(name = "member_race")
 @Data
 @NoArgsConstructor
-@IdClass(MemberRaceId.class) // Composite primary key
-@EntityListeners(AuditListener.class)
+@IdClass(MemberRaceId.class)
 public class MemberRace {
 
    @Id
@@ -26,9 +25,21 @@ public class MemberRace {
    @JoinColumn(name = "activity_id")
    private Activity activity;
 
-   @Column(name = "created_at")
+   @Column(name = "created_at", nullable = false, updatable = false)
    private Long createdAt;
 
    @Column(name = "updated_at")
    private Long updatedAt;
+
+   @PrePersist
+   public void prePersist() {
+      long now = System.currentTimeMillis();
+      this.createdAt = now;
+      this.updatedAt = now;
+   }
+
+   @PreUpdate
+   public void preUpdate() {
+      this.updatedAt = System.currentTimeMillis();
+   }
 }
