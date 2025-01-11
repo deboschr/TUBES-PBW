@@ -10,14 +10,12 @@ import org.springframework.web.bind.annotation.*;
 
 import jakarta.servlet.http.HttpSession;
 
-
 @Controller
 @RequestMapping("/user")
 public class UserController {
 
    @Autowired
    private UserService userService;
-
 
    // Render halaman signup
    @GetMapping("/signup")
@@ -57,19 +55,30 @@ public class UserController {
       return "redirect:/user/signin";
    }
 
-   // // Handle signin
-   // @PostMapping("/signin")
-   // public String signin(@RequestParam String email, @RequestParam String
-   // password, HttpSession session,
-   // Model model) {
-   // User user = userService.getUserByEmail(email).orElse(null);
-   // if (user == null || !user.getPassword().equals(password)) {
-   // model.addAttribute("error", "Invalid email or password.");
-   // return "signin";
-   // }
-   // session.setAttribute("loggedInUser", user);
-   // return "redirect:/user/profile";
-   // }
+   // Handle signin
+   @PostMapping("/signin")
+   public String signin(@RequestParam String email, @RequestParam String password, HttpSession session, Model model) {
+      // Cari user berdasarkan email
+      Optional<User> optionalUser = userService.getUserByEmail(email);
+
+      if (optionalUser.isEmpty()) {
+         model.addAttribute("error", "Invalid email or password.");
+         return "signin"; // Kembali ke halaman signin dengan pesan error
+      }
+
+      User user = optionalUser.get();
+
+      // Periksa password
+      if (!passwordEncoder.matches(password, user.getPassword())) {
+         model.addAttribute("error", "Invalid email or password.");
+         return "signin";
+      }
+
+      // Simpan user ke session
+      session.setAttribute("loggedInUser", user);
+
+      return "redirect:/user/profile"; // Redirect ke halaman profile setelah berhasil signin
+   }
 
    // // Handle signout
    // @PostMapping("/signout")
