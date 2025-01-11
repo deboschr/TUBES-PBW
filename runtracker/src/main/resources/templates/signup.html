@@ -1,28 +1,48 @@
 <!DOCTYPE html>
 <html>
 	<head>
+		<link rel="stylesheet" href="/css/signup-style.css">
 		<title>Sign Up</title>
 	</head>
 	<body>
-		<h1>Sign Up</h1>
-		<form action="/user/signup" method="post">
-			<label>Name:</label>
-			<input type="text" name="name" required />
-			<br />
-			<label>Email:</label>
-			<input type="email" name="email" required />
-			<br />
-			<label>Password:</label>
-			<input type="password" name="password" required />
-			<br />
-			<label>Role:</label>
-			<select name="role">
-				<option value="MEMBER">Member</option>
-				<option value="ADMIN">Admin</option>
-			</select>
-			<br />
-			<button type="submit">Sign Up</button>
-		</form>
-		<p>Already have an account? <a href="/user/signin">Sign In</a></p>
+		<section>
+			<form action="/user/signup" method="post">
+				<h1>Sign Up</h1>
+				<div class="inputbox">
+					<ion-icon name="person-outline"></ion-icon>
+					<label>Username:</label>
+					<input type="text" name="username" id="username" required />
+					<br />
+				</div>
+				<div class="inputbox">
+					<ion-icon name="mail-outline"></ion-icon>
+					<label>Email:</label>
+					<input type="email" name="email" id="email" required />
+					<br />
+				</div>
+				<div class="inputbox">
+					<ion-icon name="lock-closed-outline"></ion-icon>
+					<label>Password:</label>
+					<input type="password" name="password" id="password" required />
+					<br />
+				</div>
+				<div class="inputbox">
+					<label>Role:</label>
+					<select name="role">
+						<option value="MEMBER">Member</option>
+						<option value="ADMIN">Admin</option>
+					</select>
+					<br />
+				</div>
+			
+				<button id="submit" type="submit">Sign Up</button>
+				<div class="register">
+					<p>Already have an account? <a href="/user/signin" class="toggle">Log In</a></p>
+				</div>
+			</form>
+		</section>
+
+		<script src="/js/signup-script.js"></script>
+		<script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
 	</body>
 </html>
