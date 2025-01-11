@@ -1,9 +1,10 @@
 <main>
     <div class="container">
-        <h1>Race Page</h1>
+        <h1>Admin - Daftar Race</h1>
         <div class="tabs">
-            <button id="upcomingTab" class="active">Upcoming Race</button>
-            <button id="historyTab">History Race</button>
+            <button id="upcomingTab" class="active">Upcoming</button>
+            <button id="ongoingTab">On-Going</button>
+            <button id="finishedTab">Finished</button>
         </div>
         <table id="raceTable">
             <thead>
@@ -11,34 +12,42 @@
                     <th>Nama Race</th>
                     <th>Tanggal</th>
                     <th>Lokasi</th>
+                    <th>Status</th>
                     <th>Detail</th>
                 </tr>
             </thead>
             <tbody>
-                <!-- Daftar race akan dimuat secara dinamis -->
+                <!-- Data race akan diisi di sini -->
             </tbody>
         </table>
     </div>
-
-    <!-- Modal untuk upcoming race -->
+    
+    <!-- Modal -->
     <div id="raceModal" class="modal">
         <div class="modal-content">
             <span id="closeModal" class="close">&times;</span>
             <h2>Detail Race</h2>
-            <p><strong>Nama Race:</strong> <span id="raceName"></span></p>
-            <p><strong>Tanggal:</strong> <span id="raceDate"></span></p>
-            <p><strong>Lokasi:</strong> <span id="raceLocation"></span></p>
-            <p id="raceDescriptionSection" style="display: none;"><strong>Deskripsi:</strong> <span
-                    id="raceDescription"></span></p>
-            <p id="raceDetailsSection" style="display: none;">
-                <strong>Jarak Tempuh:</strong> <span id="raceDistance"></span> km<br>
-                <strong>Waktu Tempuh:</strong> <span id="raceTime"></span> jam<br>
-                <strong>Peringkat:</strong> <span id="raceRank"></span><br>
-                <strong>Top 5 Runners:</strong>
-            <ul id="topRunners"></ul>
-            </p>
+            <p><strong>Nama Race:</strong> <span id="modalRaceName"></span></p>
+            <p><strong>Tanggal:</strong> <span id="modalRaceDate"></span></p>
+            <p><strong>Lokasi:</strong> <span id="modalRaceLocation"></span></p>
+            <p><strong>Deskripsi:</strong> <span id="modalRaceDescription"></span></p>
+            <p><strong>Status:</strong> <span id="modalRaceStatus"></span></p>
+            <table id="memberTable">
+                <thead>
+                    <tr>
+                        <th>Nama Member</th>
+                        <th>Nomor Marathon</th>
+                        <th>Tanggal Daftar</th>
+                        <th>Detail</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- Daftar member akan dimuat di sini -->
+                </tbody>
+            </table>
             <div class="modal-buttons">
-                <button id="registerButton" class="button-register" style="display: none;">Daftar Race</button>
+                <button class="save-button" id="saveChanges" style="display: none;">Save</button>
+                <button class="cancel-button" id="cancelChanges" style="display: none;">Cancel</button>
             </div>
         </div>
     </div>

@@ -18,6 +18,7 @@ public class SecurityConfig {
             this.customSessionAuthenticationFilter = customSessionAuthenticationFilter;
       }
 
+      // Hash password untuk disimpan di database
       @Bean
       public PasswordEncoder passwordEncoder() {
             return new BCryptPasswordEncoder();
