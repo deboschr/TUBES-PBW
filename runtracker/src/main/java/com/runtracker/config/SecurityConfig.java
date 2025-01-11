@@ -10,29 +10,33 @@ import org.springframework.security.web.SecurityFilterChain;
 @Configuration
 public class SecurityConfig {
 
-   @Bean
-   public PasswordEncoder passwordEncoder() {
-      return new BCryptPasswordEncoder();
-   }
+      @Bean
+      public PasswordEncoder passwordEncoder() {
+            return new BCryptPasswordEncoder();
+      }
 
-   @SuppressWarnings("removal")
-   @Bean
-   public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-      http
-            .csrf().disable()
-            .authorizeHttpRequests(auth -> auth
-                  .requestMatchers("/user/signup", "/user/signin").permitAll() // Halaman publik
-                  .anyRequest().authenticated() // Halaman lain memerlukan login
-            )
-            .formLogin(form -> form
-                  .loginPage("/user/signin") // Halaman login custom
-                  .defaultSuccessUrl("/user/profile", true) // Redirect setelah login berhasil
-                  .permitAll())
-            .logout(logout -> logout
-                  .logoutUrl("/user/signout") // URL logout
-                  .logoutSuccessUrl("/user/signin") // Redirect setelah logout
-                  .permitAll());
+      @Bean
+      public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+            http
+                        .csrf().disable()
+                        .authorizeHttpRequests(auth -> auth
+                                    .requestMatchers("/css/**", "/js/**", "/images/**", "/webjars/**").permitAll() // Izinkan
+                                                                                                                   // akses
+                                                                                                                   // ke
+                                                                                                                   // file
+                                                                                                                   // statis
+                                    .requestMatchers("/user/signup", "/user/signin").permitAll() // Halaman publik
+                                    .anyRequest().authenticated() // Halaman lain memerlukan login
+                        )
+                        .formLogin(form -> form
+                                    .loginPage("/user/signin") // Halaman login custom
+                                    .defaultSuccessUrl("/user/profile", true) // Redirect setelah login berhasil
+                                    .permitAll())
+                        .logout(logout -> logout
+                                    .logoutUrl("/user/signout") // URL logout
+                                    .logoutSuccessUrl("/user/signin") // Redirect setelah logout
+                                    .permitAll());
 
-      return http.build();
-   }
+            return http.build();
+      }
 }

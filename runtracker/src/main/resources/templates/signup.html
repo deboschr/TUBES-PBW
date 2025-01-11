@@ -1,48 +1,32 @@
 <!DOCTYPE html>
 <html>
 	<head>
-		<link rel="stylesheet" href="/css/signup-style.css">
 		<title>Sign Up</title>
+		<!-- Hubungkan dengan file CSS -->
+		<link rel="stylesheet" type="text/css" href="/css/signup.css" />
 	</head>
 	<body>
-		<section>
+		<div class="signup-container">
+			<h1>Sign Up</h1>
 			<form action="/user/signup" method="post">
-				<h1>Sign Up</h1>
-				<div class="inputbox">
-					<ion-icon name="person-outline"></ion-icon>
-					<label>Username:</label>
-					<input type="text" name="username" id="username" required />
-					<br />
-				</div>
-				<div class="inputbox">
-					<ion-icon name="mail-outline"></ion-icon>
-					<label>Email:</label>
-					<input type="email" name="email" id="email" required />
-					<br />
-				</div>
-				<div class="inputbox">
-					<ion-icon name="lock-closed-outline"></ion-icon>
-					<label>Password:</label>
-					<input type="password" name="password" id="password" required />
-					<br />
-				</div>
-				<div class="inputbox">
-					<label>Role:</label>
-					<select name="role">
-						<option value="MEMBER">Member</option>
-						<option value="ADMIN">Admin</option>
-					</select>
-					<br />
-				</div>
-			
-				<button id="submit" type="submit">Sign Up</button>
-				<div class="register">
-					<p>Already have an account? <a href="/user/signin" class="toggle">Log In</a></p>
-				</div>
-			</form>
-		</section>
+				<label for="name">Name:</label>
+				<input type="text" id="name" name="name" required />
 
-		<script src="/js/signup-script.js"></script>
-		<script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+				<label for="email">Email:</label>
+				<input type="email" id="email" name="email" required />
+
+				<label for="password">Password:</label>
+				<input type="password" id="password" name="password" required />
+
+				<label for="role">Role:</label>
+				<select id="role" name="role">
+					<option value="MEMBER">Member</option>
+					<option value="ADMIN">Admin</option>
+				</select>
+
+				<button type="submit">Sign Up</button>
+			</form>
+			<p>Already have an account? <a href="/user/signin">Sign In</a></p>
+		</div>
 	</body>
 </html>
