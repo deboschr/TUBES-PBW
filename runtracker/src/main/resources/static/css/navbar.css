@@ -1,23 +1,36 @@
 /* Styling untuk navbar */
 .navbar {
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100%;
 	background-color: #ffcc00;
-	/* Warna kuning */
 	padding: 10px 20px;
 	box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+	z-index: 1000;
+}
+
+body {
+	margin: 0;
+	padding-top: 60px;
 }
 
 .navbar nav {
 	display: flex;
-	justify-content: space-between;
 	align-items: center;
 }
 
 .navbar ul {
+	display: flex;
 	list-style: none;
 	margin: 0;
 	padding: 0;
-	display: flex;
-	gap: 20px;
+	width: 100%;
+	gap: 30px;
+}
+
+.navbar ul .signout {
+	margin-left: auto;
 }
 
 .navbar ul li {
@@ -27,17 +40,15 @@
 .navbar ul li a {
 	text-decoration: none;
 	color: #333;
-	/* Warna hitam */
 	font-size: 16px;
 	font-weight: bold;
 	padding: 8px 12px;
 	border-radius: 4px;
 	transition: background-color 0.3s, color 0.3s;
+	text-align: center;
 }
 
 .navbar ul li a:hover {
 	background-color: #333;
-	/* Hitam saat hover */
 	color: #fff;
-	/* Putih saat hover */
 }
