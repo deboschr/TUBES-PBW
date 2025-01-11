@@ -1,36 +1,22 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html>
 	<head>
-		<link rel="stylesheet" href="/css/signin-style.css">
 		<title>Sign In</title>
+		<link rel="stylesheet" type="text/css" href="/css/signin.css" />
 	</head>
 	<body>
-		<section>
+		<div class="signup-container">
+			<h1>Sign In</h1>
 			<form action="/user/signin" method="post">
-				<h1>Sign In</h1>
-				<div class="inputbox">
-					<ion-icon name="mail-outline"></ion-icon>
-					<label>Email:</label>
-					<input type="email" name="email" class="input-field" required />
-					<br />
-				</div>
-				<div class="inputbox">
-					<ion-icon name="lock-closed-outline"></ion-icon>
-					<label>Password:</label>
-					<input type="password" name="password" class="input-field" required />
-					<br />
-				</div>
-
+				<label for="email">Email:</label>
+				<input type="email" id="email" name="email" required />
+		
+				<label for="password">Password:</label>
+				<input type="password" id="password" name="password" required />
+		
 				<button type="submit">Sign In</button>
-				<div class="login">
-					<p>Don't have an account? <a href="/user/signup">Sign Up</a></p>
-				</div>
-
-				<!-- Tampilkan pesan error -->
-				<p th:if="${error}" th:text="${error}" style="color: red"></p>
 			</form>
-		</section>
-
-		<script src="/js/signin-script.js"></script>
+			<p>Don't have an account? <a href="/user/signup">Sign Up</a></p>
+		</div>
 	</body>
 </html>
