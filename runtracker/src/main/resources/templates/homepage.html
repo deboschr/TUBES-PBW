@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <title>Dashboard</title>
+    <link rel="stylesheet" href="/css/index.css" />
+    <link rel="stylesheet" href="/css/navbar.css" />
+    <link rel="stylesheet" href="/css/homepage-style.css" />
+</head>
+
+<body>
+    <!-- Include Navbar -->
+    <th:block th:include="fragments/navbar :: *"></th:block>
+
+   <main>
+        <section class="home">
+            <div class="home-text">
+                <span>Run Tracker</span>
+                <h1>TrackFusion</h1>
+                <p>Your ultimate run tracker! Monitor your progress, set goals, and stay motivated as you conquer your running
+                    journey.
+                    Simple, smart, and designed for you.</p>
+                <div class="main-btn">
+                    <a href="/user/signin" class="btn">Register Now!</a>
+                </div>
+            </div>
+        </section>
+        
+        <div class="share">
+            <p>Check out our:</p>
+        
+            <div class="social">
+                <a href="#"><i class='bx bxl-instagram-alt'></i></a>
+                <a href="#""><i class='bx bxl-twitter'></i></a>
+                </div>
+            </div>
+   </main>
+
+    <!-- Script untuk interaksi -->
+    <script src="/js/navbar.js"></script>
+    <script src="/js/dashboard-script.js"></script>
+</body>
+
+</html>
