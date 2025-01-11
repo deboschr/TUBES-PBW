@@ -1,19 +1,23 @@
 <!-- fragments/navbar.html -->
 <div class="navbar" th:fragment="navbar">
 	<nav>
-		<ul>
-			<!-- Jika halaman adalah home -->
-			<li th:if="${page == 'home'}"><a href="/about-us">About Us</a></li>
-			<li th:if="${page == 'home'}"><a href="/login">Login</a></li>
-
-			<!-- Jika halaman bukan home -->
-			<li th:unless="${page == 'home'}"><a href="/dashboard">Dashboard</a></li>
-			<li th:unless="${page == 'home'}"><a href="/activity">Activity</a></li>
-			<li th:unless="${page == 'home'}"><a href="/race">Race</a></li>
-			<li th:unless="${page == 'home'}"><a href="/user/profile">Profile</a></li>
-			<li th:unless="${page == 'home'}">
-				<a href="/user/signout">Sign Out</a>
-			</li>
-		</ul>
+		<div class="title-content">
+			<div class="brand">
+				<h3><a href="/home">TrackFusion</a></h3>
+			</div>
+		</div>
+		<div class="nav-content">
+			<ul>
+				<li th:if="${page == 'home'}"><a href="/about-us">About Us</a></li>
+				<li th:if="${page == 'home'}"><a href="/login">Login</a></li>
+			</ul>
+			<ul>
+				<!-- Jika halaman bukan home -->
+				<li th:unless="${page == 'home'}"><a href="/dashboard">Dashboard</a></li>
+				<li th:unless="${page == 'home'}"><a href="/activity">Activity</a></li>
+				<li th:unless="${page == 'home'}"><a href="/race">Race</a></li>
+				<li th:unless="${page == 'home'}"><a href="/user/profile">Profile</a></li>
+			</ul>
+		</div>
 	</nav>
 </div>

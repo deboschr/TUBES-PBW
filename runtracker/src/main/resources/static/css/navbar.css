@@ -1,54 +1,68 @@
-/* Styling untuk navbar */
+/* CSS for navbar */
 .navbar {
 	position: fixed;
 	top: 0;
 	left: 0;
 	width: 100%;
+	z-index: 1000;
 	background-color: #ffcc00;
 	padding: 10px 20px;
-	box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-	z-index: 1000;
-}
-
-body {
-	margin: 0;
-	padding-top: 60px;
+	box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 .navbar nav {
 	display: flex;
+	justify-content: space-between;
 	align-items: center;
 }
 
-.navbar ul {
+.title-content {
+	flex: 1;
+	display: flex;
+	align-items: center;
+}
+
+.title-content .brand h3 {
+	margin: 0;
+	font-size: 1.5rem;
+}
+
+.title-content .brand a {
+	text-decoration: none;
+	color: #343a40;
+}
+
+.title-content .brand a:hover {
+	color: white;
+}
+
+.nav-content {
+	flex: 1;
+	display: flex;
+	justify-content: flex-end;
+	align-items: center;
+	gap: 20px;
+}
+
+.nav-content ul {
 	display: flex;
 	list-style: none;
 	margin: 0;
 	padding: 0;
-	width: 100%;
-	gap: 30px;
 }
 
-.navbar ul .signout {
-	margin-left: auto;
+.nav-content ul li {
+	margin: 0 10px;
 }
 
-.navbar ul li {
-	display: inline;
-}
-
-.navbar ul li a {
+.nav-content ul li a {
 	text-decoration: none;
-	color: #333;
-	font-size: 16px;
-	font-weight: bold;
-	padding: 8px 12px;
-	border-radius: 4px;
-	transition: background-color 0.3s, color 0.3s;
-	text-align: center;
+	color: black;
+	font-size: 1rem;
+	transition: color 0.3s ease;
 }
 
-.navbar ul li a:hover {
-	background-color: #333;
-	color: #fff;
+.nav-content ul li a:hover {
+	color: white;
+	/* Optional: Adjust hover color */
 }
