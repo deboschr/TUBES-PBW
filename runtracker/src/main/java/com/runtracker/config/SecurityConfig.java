@@ -29,7 +29,7 @@ public class SecurityConfig {
                         .csrf().disable()
                         .authorizeHttpRequests(auth -> auth
                                     .requestMatchers("/css/**", "/js/**", "/image/**", "/webjars/**").permitAll()
-                                    .requestMatchers("/user/signup", "/user/signin").permitAll()
+                                    .requestMatchers("/","/user/signup", "/user/signin").permitAll()
                                     .anyRequest().authenticated())
                         .addFilterBefore(customSessionAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)
                         .sessionManagement(session -> session

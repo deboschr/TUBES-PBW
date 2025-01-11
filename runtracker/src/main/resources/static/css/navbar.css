@@ -1,38 +1,43 @@
+/* Styling untuk navbar */
 .navbar {
+	background-color: #ffcc00;
+	/* Warna kuning */
+	padding: 10px 20px;
+	box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.navbar nav {
 	display: flex;
 	justify-content: space-between;
 	align-items: center;
-	background-color: #333;
-	padding: 10px 20px;
-	color: white;
 }
 
-.navbar .logo {
-	display: flex;
-	align-items: center;
-}
-
-.navbar .logo img {
-	height: 40px;
-	margin-right: 10px;
-}
-
-.navbar .nav-links {
+.navbar ul {
 	list-style: none;
+	margin: 0;
+	padding: 0;
 	display: flex;
 	gap: 20px;
 }
 
-.navbar .nav-links li {
+.navbar ul li {
 	display: inline;
 }
 
-.navbar .nav-links a {
+.navbar ul li a {
 	text-decoration: none;
-	color: white;
+	color: #333;
+	/* Warna hitam */
+	font-size: 16px;
 	font-weight: bold;
+	padding: 8px 12px;
+	border-radius: 4px;
+	transition: background-color 0.3s, color 0.3s;
 }
 
-.navbar .nav-links a:hover {
-	text-decoration: underline;
+.navbar ul li a:hover {
+	background-color: #333;
+	/* Hitam saat hover */
+	color: #fff;
+	/* Putih saat hover */
 }
