@@ -1,67 +1,57 @@
-<!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
-	<head>
-		<title>Profile</title>
-		<link rel="stylesheet" href="/css/index.css" />
-		<link rel="stylesheet" href="/css/navbar.css" />
-		<link rel="stylesheet" href="/css/profile.css" />
-	</head>
-	<body>
-		<!-- Include Navbar -->
-		<th:block th:include="fragments/navbar :: *"></th:block>
+<main>
+	<div class="container">
+		<img
+			src="/img/profile.jpg"
+			alt="Profile Picture"
+			id="profilePicture"
+			class="profile-picture" />
+		<div class="info" id="profileName">Nama: John Doe</div>
+		<div class="info" id="profileEmail">Email: john.doe@example.com</div>
+		<div class="buttons">
+			<button class="edit-button" id="editButton">Edit</button>
+			<button class="delete-button" id="deleteButton">Hapus Akun</button>
+			<button class="logout-button" id="logoutButton">Log Out</button>
+		</div>
+	</div>
 
-		<main>
-			<div class="container">
-				<img src="/img/profile.jpg" alt="Profile Picture" id="profilePicture" class="profile-picture">
-				<div class="info" id="profileName">Nama: John Doe</div>
-				<div class="info" id="profileEmail">Email: john.doe@example.com</div>
-				<div class="buttons">
-					<button class="edit-button" id="editButton">Edit</button>
-					<button class="delete-button" id="deleteButton">Hapus Akun</button>
-					<button class="logout-button" id="logoutButton">Log Out</button>
+	<div id="editModal" class="modal">
+		<div class="modal-content">
+			<span id="closeModal" class="close">&times;</span>
+			<h2>Edit Profil</h2>
+			<form id="editForm">
+				<div class="form-group">
+					<label for="editPicture">Ubah Foto Profil</label>
+					<input type="file" id="editPicture" accept="image/*" />
 				</div>
-			</div>
-			
-			<div id="editModal" class="modal">
-				<div class="modal-content">
-					<span id="closeModal" class="close">&times;</span>
-					<h2>Edit Profil</h2>
-					<form id="editForm">
-						<div class="form-group">
-							<label for="editPicture">Ubah Foto Profil</label>
-							<input type="file" id="editPicture" accept="image/*">
-						</div>
-						<div class="form-group">
-							<label for="editName">Nama</label>
-							<input type="text" id="editName" value="John Doe">
-						</div>
-						<div class="form-group">
-							<label for="editEmail">Email</label>
-							<input type="email" id="editEmail" value="john.doe@example.com">
-						</div>
-						<div class="form-group">
-							<label for="oldPassword">Password Lama</label>
-							<input type="password" id="oldPassword">
-						</div>
-						<div class="form-group">
-							<label for="newPassword">Password Baru</label>
-							<input type="password" id="newPassword">
-						</div>
-						<div class="form-group">
-							<label for="confirmPassword">Konfirmasi Password Baru</label>
-							<input type="password" id="confirmPassword">
-						</div>
-						<div class="modal-buttons">
-							<button type="button" class="cancel-button" id="cancelEdit">Batal</button>
-							<button type="button" class="save-button" id="saveEdit">Simpan</button>
-						</div>
-					</form>
+				<div class="form-group">
+					<label for="editName">Nama</label>
+					<input type="text" id="editName" value="John Doe" />
 				</div>
-			</div>
-		</main>
-
-		<!-- Script untuk interaksi -->
-		<script src="/js/navbar.js"></script>
-		<script src="/js/profile.js"></script>
-	</body>
-</html>
+				<div class="form-group">
+					<label for="editEmail">Email</label>
+					<input type="email" id="editEmail" value="john.doe@example.com" />
+				</div>
+				<div class="form-group">
+					<label for="oldPassword">Password Lama</label>
+					<input type="password" id="oldPassword" />
+				</div>
+				<div class="form-group">
+					<label for="newPassword">Password Baru</label>
+					<input type="password" id="newPassword" />
+				</div>
+				<div class="form-group">
+					<label for="confirmPassword">Konfirmasi Password Baru</label>
+					<input type="password" id="confirmPassword" />
+				</div>
+				<div class="modal-buttons">
+					<button type="button" class="cancel-button" id="cancelEdit">
+						Batal
+					</button>
+					<button type="button" class="save-button" id="saveEdit">
+						Simpan
+					</button>
+				</div>
+			</form>
+		</div>
+	</div>
+</main>

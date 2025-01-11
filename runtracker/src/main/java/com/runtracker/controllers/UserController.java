@@ -37,15 +37,38 @@ public class UserController {
    // Render halaman profile
    @GetMapping("/profile")
    public String renderProfilePage(HttpSession session, Model model) {
-      User dataSession = (User) session.getAttribute("dataSession");
+      User user = (User) session.getAttribute("dataSession");
 
-      if (dataSession == null) {
+      if (user == null) {
          return "redirect:/user/signin";
       }
 
-      model.addAttribute("user", dataSession);
+      model.addAttribute("title", "User Profile"); // Judul halaman
+      model.addAttribute("page", "profile"); // Nama halaman
+      model.addAttribute("user", user); // Data pengguna
 
-      return "profile";
+      return "index";
+   }
+
+   // Handle signin
+   @PostMapping("/signin")
+   public String signin(@RequestParam String email, @RequestParam String password, HttpSession session, Model model) {
+      try {
+         // Proses signin melalui service
+         User user = userService.authenticate(email, password);
+
+         // Simpan pengguna yang berhasil login ke session
+         session.setAttribute("dataSession", user);
+
+         System.out.println(session.getAttribute("dataSession"));
+
+         // Redirect ke halaman profile setelah berhasil signin
+         return "redirect:/user/profile";
+      } catch (IllegalArgumentException e) {
+         // Tangani error dari service dan tampilkan pesan ke pengguna
+         model.addAttribute("error", e.getMessage());
+         return "signin"; // Kembali ke halaman signin dengan pesan error
+      }
    }
 
    // Handle signup
@@ -61,29 +84,6 @@ public class UserController {
       userService.createUser(user);
 
       return "redirect:/user/signin";
-   }
-
-   // Handle signin
-   @PostMapping("/signin")
-   public String signin(@RequestParam String email, @RequestParam String password, HttpSession session, Model model) {
-      try {
-         // Proses signin melalui service
-         User user = userService.authenticate(email, password);
-
-         // Simpan pengguna yang berhasil login ke session
-         session.setAttribute("dataSession", user);
-
-         // Redirect ke halaman profile setelah berhasil signin
-         return "redirect:/user/profile";
-      } catch (IllegalArgumentException e) {
-
-         // Log error ke console atau file log
-         logger.error("Signin failed for email: {}. Reason: {}", email, e.getMessage());
-
-         // Tangani error dari service dan tampilkan pesan ke pengguna
-         model.addAttribute("error", e.getMessage());
-         return "signin"; // Kembali ke halaman signin dengan pesan error
-      }
    }
 
    // // Handle signout

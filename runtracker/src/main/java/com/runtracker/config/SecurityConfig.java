@@ -1,14 +1,22 @@
 package com.runtracker.config;
 
+import com.runtracker.security.CustomSessionAuthenticationFilter;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 @Configuration
 public class SecurityConfig {
+
+      private final CustomSessionAuthenticationFilter customSessionAuthenticationFilter;
+
+      public SecurityConfig(CustomSessionAuthenticationFilter customSessionAuthenticationFilter) {
+            this.customSessionAuthenticationFilter = customSessionAuthenticationFilter;
+      }
 
       @Bean
       public PasswordEncoder passwordEncoder() {
@@ -20,22 +28,13 @@ public class SecurityConfig {
             http
                         .csrf().disable()
                         .authorizeHttpRequests(auth -> auth
-                                    .requestMatchers("/css/**", "/js/**", "/images/**", "/webjars/**").permitAll() // Izinkan
-                                                                                                                   // akses
-                                                                                                                   // ke
-                                                                                                                   // file
-                                                                                                                   // statis
-                                    .requestMatchers("/user/signup", "/user/signin").permitAll() // Halaman publik
-                                    .anyRequest().authenticated() // Halaman lain memerlukan login
-                        )
-                        .formLogin(form -> form
-                                    .loginPage("/user/signin") // Halaman login custom
-                                    .defaultSuccessUrl("/user/profile", true) // Redirect setelah login berhasil
-                                    .permitAll())
-                        .logout(logout -> logout
-                                    .logoutUrl("/user/signout") // URL logout
-                                    .logoutSuccessUrl("/user/signin") // Redirect setelah logout
-                                    .permitAll());
+                                    .requestMatchers("/css/**", "/js/**", "/image/**", "/webjars/**").permitAll()
+                                    .requestMatchers("/user/signup", "/user/signin").permitAll()
+                                    .anyRequest().authenticated())
+                        .addFilterBefore(customSessionAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)
+                        .sessionManagement(session -> session
+                                    .maximumSessions(1)) // Hanya 1 sesi aktif per pengguna
+                        .formLogin().disable(); // Nonaktifkan login bawaan Spring Security
 
             return http.build();
       }
