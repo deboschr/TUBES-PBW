@@ -1,12 +1,9 @@
-<nav class="navbar">
-	<div class="logo">
-		<img src="/images/logo.png" alt="Run Tracker Logo" />
-		<span>Run Tracker</span>
-	</div>
-	<ul class="nav-links">
-		<li><a href="/dashboard">Dashboard</a></li>
-		<li><a href="/activity">Activity</a></li>
-		<li><a href="/race">Race</a></li>
-		<li><a href="/profile">Profile</a></li>
-	</ul>
-</nav>
+<!-- fragments/navbar.html -->
+<div class="navbar" th:fragment="navbar">
+	<nav>
+		<ul>
+			<li><a href="/user/profile">Profile</a></li>
+			<li><a href="/user/signout">Sign Out</a></li>
+		</ul>
+	</nav>
+</div>
