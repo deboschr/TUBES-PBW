@@ -1,6 +1,6 @@
 body {
-	font-family: Arial, sans-serif;
-	background-color: #f4f4f9;
+	font-family: "Rubik", sans-serif;
+	background-color: #1f1f21;
 	margin: 0;
 	padding: 0;
 	display: flex;
@@ -48,13 +48,13 @@ button {
 
 input:focus,
 select:focus {
-	border-color: #6c63ff;
+	border-color: #ffae00;
 	outline: none;
 	box-shadow: 0 0 5px rgba(108, 99, 255, 0.5);
 }
 
 button {
-	background-color: #6c63ff;
+	background-color: #ffae00;
 	color: white;
 	border: none;
 	cursor: pointer;
@@ -63,7 +63,7 @@ button {
 }
 
 button:hover {
-	background-color: #514ecf;
+	background-color: #ffae00;
 }
 
 p {
@@ -72,7 +72,7 @@ p {
 }
 
 p a {
-	color: #6c63ff;
+	color: #ffae00;
 	text-decoration: none;
 	font-weight: bold;
 }

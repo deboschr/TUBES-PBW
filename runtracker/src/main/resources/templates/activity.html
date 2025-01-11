@@ -7,15 +7,39 @@
 		<link rel="stylesheet" href="/css/activity.css" />
 	</head>
 	<body>
-		<!-- Include Navbar -->
 		<th:block th:include="fragments/navbar :: *"></th:block>
 
 		<main>
-			<h1>Your Activities</h1>
-			<p>Here you can track your past and upcoming activities.</p>
+			<div class="container">
+				<h1>Tambah Aktivitas Baru</h1>
+				<form id="activityForm">
+					<label for="activityDate">Tanggal Aktivitas:</label>
+					<input type="date" id="activityDate" name="activityDate" required>
+			
+					<label for="activityTitle">Judul:</label>
+					<input type="text" id="activityTitle" name="activityTitle" placeholder="Masukkan judul aktivitas" required>
+			
+					<label for="activityDescription">Deskripsi:</label>
+					<textarea id="activityDescription" name="activityDescription" placeholder="Masukkan deskripsi aktivitas"
+						required></textarea>
+			
+					<label for="duration">Waktu Tempuh (jam):</label>
+					<input type="number" id="duration" name="duration" placeholder="Contoh: 2.5" step="0.1" required>
+			
+					<label for="distance">Jarak Tempuh (km):</label>
+					<input type="number" id="distance" name="distance" placeholder="Contoh: 10" step="0.1" required>
+			
+					<label for="activityPhotos">Foto Aktivitas (maks 5):</label>
+					<input type="file" id="activityPhotos" name="activityPhotos" accept="image/*" multiple>
+			
+					<div class="buttons">
+						<button type="submit" id="saveButton">Save</button>
+						<button type="button" id="cancelButton">Cancel</button>
+					</div>
+				</form>
+			</div>
 		</main>
 
-		<!-- Script untuk interaksi -->
 		<script src="/js/navbar.js"></script>
 		<script src="/js/activity.js"></script>
 	</body>
