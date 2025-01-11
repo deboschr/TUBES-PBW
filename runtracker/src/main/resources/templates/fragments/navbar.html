@@ -2,11 +2,18 @@
 <div class="navbar" th:fragment="navbar">
 	<nav>
 		<ul>
-			<li><a href="/dashboard">Dashboard</a></li>
-			<li><a href="/activity">Activity</a></li>
-			<li><a href="/race">Race</a></li>
-			<li><a href="/user/profile">Profile</a></li>
-			<li class="signout"><a href="/user/signout">Sign Out</a></li>
+			<!-- Jika halaman adalah home -->
+			<li th:if="${page == 'home'}"><a href="/about-us">About Us</a></li>
+			<li th:if="${page == 'home'}"><a href="/login">Login</a></li>
+
+			<!-- Jika halaman bukan home -->
+			<li th:unless="${page == 'home'}"><a href="/dashboard">Dashboard</a></li>
+			<li th:unless="${page == 'home'}"><a href="/activity">Activity</a></li>
+			<li th:unless="${page == 'home'}"><a href="/race">Race</a></li>
+			<li th:unless="${page == 'home'}"><a href="/user/profile">Profile</a></li>
+			<li th:unless="${page == 'home'}">
+				<a href="/user/signout">Sign Out</a>
+			</li>
 		</ul>
 	</nav>
 </div>

@@ -20,16 +20,17 @@ public class CustomSessionAuthenticationFilter extends OncePerRequestFilter {
    @Override
    protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
          throws ServletException, IOException {
-      // Ambil sesi
+      String requestURI = request.getRequestURI();
+      System.out.println("CustomSessionAuthenticationFilter: " + requestURI);
+
       Object dataSession = request.getSession().getAttribute("dataSession");
 
-      // Validasi sesi dan set autentikasi
       if (dataSession != null && SecurityContextHolder.getContext().getAuthentication() == null) {
          User user = (User) dataSession;
+         System.out.println("User from session: " + user.getEmail());
 
-         // Atur autentikasi ke Spring Security
          UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(
-               user, null, null); // Tambahkan roles jika diperlukan
+               user, null, null);
          authentication.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
 
          SecurityContextHolder.getContext().setAuthentication(authentication);
@@ -37,4 +38,5 @@ public class CustomSessionAuthenticationFilter extends OncePerRequestFilter {
 
       filterChain.doFilter(request, response);
    }
+
 }
