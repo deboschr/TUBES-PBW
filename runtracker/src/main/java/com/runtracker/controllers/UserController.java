@@ -10,12 +10,17 @@ import org.springframework.web.bind.annotation.*;
 
 import jakarta.servlet.http.HttpSession;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 @Controller
 @RequestMapping("/user")
 public class UserController {
 
    @Autowired
    private UserService userService;
+
+   private static final Logger logger = LoggerFactory.getLogger(UserController.class);
 
    // Render halaman signup
    @GetMapping("/signup")
@@ -29,16 +34,19 @@ public class UserController {
       return "signin";
    }
 
-   // // Render halaman profile
-   // @GetMapping("/profile")
-   // public String renderProfilePage(HttpSession session, Model model) {
-   // User loggedInUser = (User) session.getAttribute("loggedInUser");
-   // if (loggedInUser == null) {
-   // return "redirect:/user/signin";
-   // }
-   // model.addAttribute("user", loggedInUser);
-   // return "profile";
-   // }
+   // Render halaman profile
+   @GetMapping("/profile")
+   public String renderProfilePage(HttpSession session, Model model) {
+      User dataSession = (User) session.getAttribute("dataSession");
+
+      if (dataSession == null) {
+         return "redirect:/user/signin";
+      }
+
+      model.addAttribute("user", dataSession);
+
+      return "profile";
+   }
 
    // Handle signup
    @PostMapping("/signup")
@@ -58,26 +66,24 @@ public class UserController {
    // Handle signin
    @PostMapping("/signin")
    public String signin(@RequestParam String email, @RequestParam String password, HttpSession session, Model model) {
-      // Cari user berdasarkan email
-      Optional<User> optionalUser = userService.getUserByEmail(email);
+      try {
+         // Proses signin melalui service
+         User user = userService.authenticate(email, password);
 
-      if (optionalUser.isEmpty()) {
-         model.addAttribute("error", "Invalid email or password.");
+         // Simpan pengguna yang berhasil login ke session
+         session.setAttribute("dataSession", user);
+
+         // Redirect ke halaman profile setelah berhasil signin
+         return "redirect:/user/profile";
+      } catch (IllegalArgumentException e) {
+
+         // Log error ke console atau file log
+         logger.error("Signin failed for email: {}. Reason: {}", email, e.getMessage());
+
+         // Tangani error dari service dan tampilkan pesan ke pengguna
+         model.addAttribute("error", e.getMessage());
          return "signin"; // Kembali ke halaman signin dengan pesan error
       }
-
-      User user = optionalUser.get();
-
-      // Periksa password
-      if (!passwordEncoder.matches(password, user.getPassword())) {
-         model.addAttribute("error", "Invalid email or password.");
-         return "signin";
-      }
-
-      // Simpan user ke session
-      session.setAttribute("loggedInUser", user);
-
-      return "redirect:/user/profile"; // Redirect ke halaman profile setelah berhasil signin
    }
 
    // // Handle signout
