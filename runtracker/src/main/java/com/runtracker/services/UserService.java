@@ -36,4 +36,17 @@ public class UserService {
       return userRepository.save(user);
    }
 
+   public User authenticate(String email, String password) {
+      // Cari user berdasarkan email
+      User user = userRepository.findByEmail(email)
+            .orElseThrow(() -> new IllegalArgumentException("Invalid email or password."));
+
+      // Periksa kecocokan password
+      if (!passwordEncoder.matches(password, user.getPassword())) {
+         throw new IllegalArgumentException("Invalid email or password.");
+      }
+
+      return user;
+   }
+
 }
