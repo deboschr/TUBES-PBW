@@ -1,46 +1,87 @@
-<!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
-	<head>
-		<title>Activity</title>
-		<link rel="stylesheet" href="/css/index.css" />
-		<link rel="stylesheet" href="/css/navbar.css" />
-		<link rel="stylesheet" href="/css/activity.css" />
-	</head>
-	<body>
-		<th:block th:include="fragments/navbar :: *"></th:block>
+<main>
+	<div class="container">
+		<header>
+			<h1>Activity Tracker</h1>
+			<button id="addActivityBtn">Add New Activity</button>
+		</header>
+		<table>
+			<thead>
+				<tr>
+					<th>Title</th>
+					<th>Date</th>
+					<th>Duration</th>
+					<th>Distance</th>
+					<th>Type</th>
+					<th>Actions</th>
+				</tr>
+			</thead>
+			<tbody id="activityList">
+				<!-- Dynamic rows will be added here -->
+			</tbody>
+		</table>
+	</div>
 
-		<main>
-			<div class="container">
-				<h1>Tambah Aktivitas Baru</h1>
-				<form id="activityForm">
-					<label for="activityDate">Tanggal Aktivitas:</label>
-					<input type="date" id="activityDate" name="activityDate" required>
-			
-					<label for="activityTitle">Judul:</label>
-					<input type="text" id="activityTitle" name="activityTitle" placeholder="Masukkan judul aktivitas" required>
-			
-					<label for="activityDescription">Deskripsi:</label>
-					<textarea id="activityDescription" name="activityDescription" placeholder="Masukkan deskripsi aktivitas"
-						required></textarea>
-			
-					<label for="duration">Waktu Tempuh (jam):</label>
-					<input type="number" id="duration" name="duration" placeholder="Contoh: 2.5" step="0.1" required>
-			
-					<label for="distance">Jarak Tempuh (km):</label>
-					<input type="number" id="distance" name="distance" placeholder="Contoh: 10" step="0.1" required>
-			
-					<label for="activityPhotos">Foto Aktivitas (maks 5):</label>
-					<input type="file" id="activityPhotos" name="activityPhotos" accept="image/*" multiple>
-			
-					<div class="buttons">
-						<button type="submit" id="saveButton">Save</button>
-						<button type="button" id="cancelButton">Cancel</button>
-					</div>
-				</form>
+	<!-- Add Activity Modal -->
+	<div class="modal" id="activityFormPopup">
+		<div class="modal-content">
+			<form id="activityForm">
+				<label for="date">Date</label>
+				<input type="date" id="date" required>
+
+				<label for="title">Title</label>
+				<input type="text" id="title" required>
+
+				<label for="description">Description</label>
+				<textarea id="description" required></textarea>
+
+				<label for="time">Duration (hour)</label>
+				<input type="text" id="time" required>
+
+				<label for="distance">Distance (km)</label>
+				<input type="text" id="distance" required>
+
+				<label for="photo">Photo (max 5)</label>
+				<input type="file" id="photo" multiple accept="image/*">
+
+				<label for="type">Activity Type</label>
+				<select id="type">
+					<option value="reguler">Reguler</option>
+					<option value="race">Race</option>
+				</select>
+
+				<div id="raceDetails" style="display: none;">
+					<label for="raceName">Race Name</label>
+					<input type="text" id="raceName">
+
+					<label for="rank">Rank</label>
+					<input type="number" id="rank">
+				</div>
+
+				<button type="button" id="saveActivity">Save</button>
+				<button type="button" id="cancelActivity">Cancel</button>
+			</form>
+		</div>
+	</div>
+
+	<!-- Detail Modal -->
+	<div class="modal" id="activityDetailPopup">
+		<div class="modal-content">
+			<h2>Activity Details</h2>
+			<p><strong>Date:</strong> <span id="detailDate"></span></p>
+			<p><strong>Title:</strong> <span id="detailTitle"></span></p>
+			<p><strong>Description:</strong> <span id="detailDescription"></span></p>
+			<p><strong>Duration:</strong> <span id="detailTime"></span></p>
+			<p><strong>Distance:</strong> <span id="detailDistance"></span></p>
+			<p><strong>Type:</strong> <span id="detailType"></span></p>
+			<div id="detailRace" style="display: none;">
+				<p><strong>Race Name:</strong> <span id="detailRaceName"></span></p>
+				<p><strong>Rank:</strong> <span id="detailRank"></span></p>
 			</div>
-		</main>
+			<img id="detailPhoto" src="" alt="Activity Photo" style="max-width: 100%; display: none;">
+			<button id="editActivity" class="action-btn">Edit</button>
+			<button id="deleteActivity" class="action-btn">Delete</button>
+			<button id="closeDetailPopup" class="action-btn">Close</button> <!-- Tambahkan tombol Close -->
+		</div>
+	</div>
 
-		<script src="/js/navbar.js"></script>
-		<script src="/js/activity.js"></script>
-	</body>
-</html>
+</main>

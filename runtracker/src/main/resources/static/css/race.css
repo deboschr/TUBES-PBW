@@ -1,6 +1,11 @@
 .container {
-    max-width: 800px;
-    margin: 50px auto;
+    position: fixed;
+    top: 50px;
+    left: 50px;
+    right: 20px;
+    bottom: 20px;
+    width: 90%;
+    height: 90%;
     background-color: white;
     border: 1px solid #ddd;
     border-radius: 8px;
@@ -10,6 +15,7 @@
 
 h1 {
     text-align: center;
+    color: #333;
 }
 
 .tabs {
@@ -44,15 +50,25 @@ td {
     border: 1px solid #ddd;
     text-align: left;
     padding: 10px;
+    font-size: 14px;
 }
 
 th {
     background-color: #ffcc00;
     color: #333;
+    font-weight: bold;
 }
 
 tr:nth-child(even) {
     background-color: #f9f9f9;
+}
+
+tr:hover {
+    background-color: #f1f1f1;
+}
+
+td {
+    color: #333;
 }
 
 .button-detail {
@@ -68,7 +84,6 @@ tr:nth-child(even) {
     background-color: #2980b9;
 }
 
-/* CSS untuk modal */
 .modal {
     display: none;
     position: fixed;
@@ -84,34 +99,20 @@ tr:nth-child(even) {
 
 .modal-content {
     background-color: white;
+    color: black;
     padding: 20px;
     border-radius: 8px;
     width: 90%;
     max-width: 500px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
 .close {
     font-size: 24px;
     font-weight: bold;
+    color: #333;
     cursor: pointer;
     float: right;
-}
-
-.form-group {
-    margin-bottom: 15px;
-}
-
-.form-group label {
-    display: block;
-    font-weight: bold;
-}
-
-.form-group input,
-.form-group textarea {
-    width: 100%;
-    padding: 10px;
-    border: 1px solid #ddd;
-    border-radius: 4px;
 }
 
 .modal-buttons {
@@ -121,19 +122,22 @@ tr:nth-child(even) {
 }
 
 .modal-buttons button {
-    margin-left: 10px;
     padding: 10px 20px;
     border: none;
+    background-color: #3498db;
+    color: white;
     cursor: pointer;
     border-radius: 4px;
 }
 
-.save-button {
-    background-color: #2ecc71;
-    color: white;
+.modal-buttons button:hover {
+    background-color: #2980b9;
 }
 
-.cancel-button {
-    background-color: #e74c3c;
-    color: white;
+.button-register {
+    background-color: #2ecc71;
+}
+
+.button-register:hover {
+    background-color: #27ae60;
 }

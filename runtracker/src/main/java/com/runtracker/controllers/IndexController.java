@@ -20,4 +20,12 @@ public class IndexController {
       model.addAttribute("page", "home"); // Nama halaman
       return "index";
    }
+
+   // Render halaman dashboard member
+   @GetMapping("/dashboard")
+   public String renderDashboardPage(Model model) {
+      model.addAttribute("title", "Dashboard"); // Judul halaman
+      model.addAttribute("page", "dashboard"); // Nama halaman
+      return "index";
+   }
 }
