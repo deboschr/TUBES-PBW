@@ -17,8 +17,8 @@ public class Activity {
    private Long id;
 
    @ManyToOne
-   @JoinColumn(name = "user_id", nullable = false)
-   private User user;
+   @JoinColumn(name = "pengguna_id", nullable = false)
+   private User pengguna;
 
    @Column(nullable = false, length = 100)
    private String title;

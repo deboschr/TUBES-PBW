@@ -7,7 +7,7 @@ import lombok.NoArgsConstructor;
 import java.util.Set;
 
 @Entity
-@Table(name = "user")
+@Table(name = "pengguna")
 @Data
 @NoArgsConstructor
 @EntityListeners(AuditListener.class)
@@ -15,7 +15,7 @@ public class User {
 
    @Id
    @GeneratedValue(strategy = GenerationType.IDENTITY)
-   @Column(name = "user_id")
+   @Column(name = "pengguna_id")
    private Long id;
 
    @Column(nullable = false, length = 200)
@@ -37,7 +37,7 @@ public class User {
    @Column(name = "updated_at")
    private Long updatedAt;
 
-   @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+   @OneToMany(mappedBy = "pengguna", cascade = CascadeType.ALL)
    private Set<Activity> activities;
 
    @OneToMany(mappedBy = "creator", cascade = CascadeType.ALL)
