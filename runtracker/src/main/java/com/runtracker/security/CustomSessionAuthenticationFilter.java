@@ -21,13 +21,11 @@ public class CustomSessionAuthenticationFilter extends OncePerRequestFilter {
    protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
          throws ServletException, IOException {
       String requestURI = request.getRequestURI();
-      System.out.println("CustomSessionAuthenticationFilter: " + requestURI);
 
       Object dataSession = request.getSession().getAttribute("dataSession");
 
       if (dataSession != null && SecurityContextHolder.getContext().getAuthentication() == null) {
          User user = (User) dataSession;
-         System.out.println("User from session: " + user.getEmail());
 
          UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(
                user, null, null);
