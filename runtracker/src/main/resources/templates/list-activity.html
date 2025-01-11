@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <title>Daftar Aktivitas</title>
+    <link rel="stylesheet" href="/css/index.css" />
+    <link rel="stylesheet" href="/css/navbar.css" />
+    <link rel="stylesheet" href="/css/list-activity.css" />
+</head>
+
+<body>
+    <!-- Include Navbar -->
+    <th:block th:include="fragments/navbar :: *"></th:block>
+
+    <main>
+        <div class="container">
+            <h1>Daftar Aktivitas</h1>
+            <table id="activityTable">
+                <thead>
+                    <tr>
+                        <th>Judul</th>
+                        <th>Tanggal</th>
+                        <th>Waktu Tempuh (jam)</th>
+                        <th>Jarak Tempuh (km)</th>
+                        <th>Jenis Aktivitas</th>
+                        <th>Detail</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- Data aktivitas akan ditambahkan secara dinamis -->
+                </tbody>
+            </table>
+        </div>
+        
+        <div id="activityModal" class="modal">
+            <div class="modal-content">
+                <span id="closeModal" class="close">&times;</span>
+                <h2>Detail Aktivitas</h2>
+                <form id="detailForm">
+                    <label for="detailDate">Tanggal Aktivitas</label>
+                    <input type="date" id="detailDate" disabled>
+        
+                    <label for="detailTitle">Judul</label>
+                    <input type="text" id="detailTitle" disabled>
+        
+                    <label for="detailDescription">Deskripsi</label>
+                    <textarea id="detailDescription" disabled></textarea>
+        
+                    <label for="detailTime">Waktu Tempuh (jam)</label>
+                    <input type="number" id="detailTime" disabled>
+        
+                    <label for="detailDistance">Jarak Tempuh (km)</label>
+                    <input type="number" id="detailDistance" disabled>
+        
+                    <label for="detailType">Jenis Aktivitas</label>
+                    <select id="detailType" disabled>
+                        <option value="Reguler">Reguler</option>
+                        <option value="Race">Race</option>
+                    </select>
+                </form>
+            </div>
+        </div>
+    </main>
+
+    <!-- Script untuk interaksi -->
+    <script src="/js/navbar.js"></script>
+    <script src="/js/dashboard.js"></script>
+</body>
+
+</html>

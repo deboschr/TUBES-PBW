@@ -1,0 +1,110 @@
+.container {
+    max-width: 800px;
+    margin: 50px auto;
+    background-color: white;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 20px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+h1 {
+    text-align: center;
+    color: #333;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+th,
+td {
+    border: 1px solid #ddd;
+    text-align: left;
+    padding: 10px;
+    font-size: 14px;
+}
+
+th {
+    background-color: #ffcc00;
+    color: #333;
+    font-weight: bold;
+}
+
+tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+tr:hover {
+    background-color: #f1f1f1;
+}
+
+td {
+    color: #333;
+}
+
+.modal {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 1000;
+}
+
+.modal-content {
+    background-color: white;
+    padding: 20px;
+    border-radius: 8px;
+    width: 90%;
+    max-width: 600px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    /* Remove position and transform if you're using flex */
+}
+
+#detailForm {
+    display: grid;
+    justify-content: center;
+    align-items: center;
+}
+
+.close {
+    font-size: 24px;
+    font-weight: bold;
+    color: #333;
+    cursor: pointer;
+    float: right;
+}
+
+.modal-buttons {
+    margin-top: 20px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.modal-buttons button {
+    width: 48%;
+    cursor: pointer;
+    color: white;
+    border: none;
+    padding: 10px;
+    border-radius: 4px;
+}
+
+#deleteButton {
+    background-color: #e74c3c;
+}
+
+#editButton {
+    background-color: #3498db;
+}
+
+#saveButton {
+    background-color: #2ecc71;
+}
