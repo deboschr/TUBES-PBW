@@ -2,7 +2,9 @@
 	<div class="container">
 		<header>
 			<h1>Activity Tracker</h1>
-			<button id="addActivityBtn">Add New Activity</button>
+			<button id="addActivityBtn" aria-label="Add new activity">
+				Add New Activity
+			</button>
 		</header>
 		<table>
 			<thead>
@@ -15,56 +17,71 @@
 					<th>Actions</th>
 				</tr>
 			</thead>
-			<tbody id="activityList">
-				<!-- Dynamic rows will be added here -->
+			<tbody>
+				<tr th:each="activity : ${activities}">
+					<td th:text="${activity.title}"></td>
+					<td th:text="${#dates.format(activity.createdAt, 'dd-MM-yyyy')}"></td>
+					<td th:text="${activity.duration}"></td>
+					<td th:text="${activity.distance}"></td>
+					<td th:text="${activity.type}"></td>
+					<td><button id="detailBtn">Detail</button></td>
+				</tr>
 			</tbody>
 		</table>
 	</div>
 
-	<!-- Add Activity Modal -->
-	<div class="modal" id="activityFormPopup">
+	<!-- Add/Edit Activity Modal -->
+	<div class="modal" id="activityFormPopup" style="display: none">
 		<div class="modal-content">
 			<form id="activityForm">
-				<label for="date">Date</label>
-				<input type="date" id="date" required>
-
 				<label for="title">Title</label>
-				<input type="text" id="title" required>
+				<input type="text" id="title" required aria-label="Activity title" />
+
+				<label for="date">Date</label>
+				<input type="date" id="date" required aria-label="Activity date" />
 
 				<label for="description">Description</label>
-				<textarea id="description" required></textarea>
+				<textarea
+					id="description"
+					required
+					aria-label="Activity description"></textarea>
 
-				<label for="time">Duration (hour)</label>
-				<input type="text" id="time" required>
+				<label for="time">Duration (hours)</label>
+				<input
+					type="number"
+					id="time"
+					required
+					aria-label="Activity duration in hours" />
 
 				<label for="distance">Distance (km)</label>
-				<input type="text" id="distance" required>
-
-				<label for="photo">Photo (max 5)</label>
-				<input type="file" id="photo" multiple accept="image/*">
+				<input
+					type="number"
+					id="distance"
+					required
+					aria-label="Activity distance in kilometers" />
 
 				<label for="type">Activity Type</label>
-				<select id="type">
-					<option value="reguler">Reguler</option>
+				<select id="type" aria-label="Select activity type">
+					<option value="regular">Regular</option>
 					<option value="race">Race</option>
 				</select>
 
-				<div id="raceDetails" style="display: none;">
+				<div id="raceDetails" style="display: none">
 					<label for="raceName">Race Name</label>
-					<input type="text" id="raceName">
+					<input type="text" id="raceName" aria-label="Race name" />
 
 					<label for="rank">Rank</label>
-					<input type="number" id="rank">
+					<input type="number" id="rank" aria-label="Race rank" />
 				</div>
 
-				<button type="button" id="saveActivity">Save</button>
+				<button type="submit" id="saveActivity">Save</button>
 				<button type="button" id="cancelActivity">Cancel</button>
 			</form>
 		</div>
 	</div>
 
 	<!-- Detail Modal -->
-	<div class="modal" id="activityDetailPopup">
+	<div class="modal" id="activityDetailPopup" style="display: none">
 		<div class="modal-content">
 			<h2>Activity Details</h2>
 			<p><strong>Date:</strong> <span id="detailDate"></span></p>
@@ -73,15 +90,11 @@
 			<p><strong>Duration:</strong> <span id="detailTime"></span></p>
 			<p><strong>Distance:</strong> <span id="detailDistance"></span></p>
 			<p><strong>Type:</strong> <span id="detailType"></span></p>
-			<div id="detailRace" style="display: none;">
+			<div id="detailRace" style="display: none">
 				<p><strong>Race Name:</strong> <span id="detailRaceName"></span></p>
 				<p><strong>Rank:</strong> <span id="detailRank"></span></p>
 			</div>
-			<img id="detailPhoto" src="" alt="Activity Photo" style="max-width: 100%; display: none;">
-			<button id="editActivity" class="action-btn">Edit</button>
-			<button id="deleteActivity" class="action-btn">Delete</button>
-			<button id="closeDetailPopup" class="action-btn">Close</button> <!-- Tambahkan tombol Close -->
+			<button id="closeDetailPopup" class="action-btn">Close</button>
 		</div>
 	</div>
-
 </main>

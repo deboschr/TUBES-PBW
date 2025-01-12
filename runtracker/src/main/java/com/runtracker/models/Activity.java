@@ -12,6 +12,7 @@ public class Activity {
    private String description;
    private Double duration;
    private Double distance;
+   private String type;
    private Long createdAt;
    private Long updatedAt;
 

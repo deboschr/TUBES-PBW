@@ -16,7 +16,10 @@ public class ActivityDAO extends DatabaseConfig {
 
    public List<Activity> findByUser(User user) {
       List<Activity> activities = new ArrayList<>();
-      String sql = "SELECT * FROM activity WHERE pengguna_id = ?";
+      String sql = "SELECT a.*, mr.activity_id AS is_race " +
+            "FROM activity a " +
+            "LEFT JOIN member_race mr ON a.activity_id = mr.activity_id " +
+            "WHERE a.pengguna_id = ?";
 
       try (Connection conn = getConnection();
             PreparedStatement stmt = conn.prepareStatement(sql)) {
@@ -25,7 +28,10 @@ public class ActivityDAO extends DatabaseConfig {
          ResultSet rs = stmt.executeQuery();
 
          while (rs.next()) {
-            activities.add(mapRowToActivity(rs));
+            Activity activity = mapRowToActivity(rs);
+            boolean isRace = rs.getLong("is_race") != 0;
+            activity.setType(isRace ? "Race" : "Exercise"); // Tentukan type di DAO
+            activities.add(activity);
          }
       } catch (SQLException e) {
          e.printStackTrace();
@@ -108,4 +114,5 @@ public class ActivityDAO extends DatabaseConfig {
       activity.setUpdatedAt(rs.getLong("updated_at"));
       return activity;
    }
+
 }
