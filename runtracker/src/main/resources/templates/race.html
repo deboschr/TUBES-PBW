@@ -15,7 +15,12 @@
 				</tr>
 			</thead>
 			<tbody>
-				<!-- Daftar race akan dimuat secara dinamis -->
+				<tr th:each="race : ${races}">
+					<td th:text="${race.name}"></td>
+					<td th:text="${#dates.format(race.createdAt, 'dd-MM-yyyy')}"></td>
+					<td th:text="${race.location}"></td>
+					<td><button id="detailBtn">Detail</button></td>
+				</tr>
 			</tbody>
 		</table>
 	</div>

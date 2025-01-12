@@ -17,14 +17,14 @@
 					<th>Actions</th>
 				</tr>
 			</thead>
-			<tbody>
+			<tbody id="activityList">
 				<tr th:each="activity : ${activities}">
 					<td th:text="${activity.title}"></td>
 					<td th:text="${#dates.format(activity.createdAt, 'dd-MM-yyyy')}"></td>
 					<td th:text="${activity.duration}"></td>
 					<td th:text="${activity.distance}"></td>
 					<td th:text="${activity.type}"></td>
-					<td><button id="detailBtn">Detail</button></td>
+					<td><button class="detailBtn" data-activity-id="${activity.id}">Detail</button></td>
 				</tr>
 			</tbody>
 		</table>
@@ -60,12 +60,6 @@
 					required
 					aria-label="Activity distance in kilometers" />
 
-				<label for="type">Activity Type</label>
-				<select id="type" aria-label="Select activity type">
-					<option value="regular">Regular</option>
-					<option value="race">Race</option>
-				</select>
-
 				<div id="raceDetails" style="display: none">
 					<label for="raceName">Race Name</label>
 					<input type="text" id="raceName" aria-label="Race name" />
@@ -82,19 +76,35 @@
 
 	<!-- Detail Modal -->
 	<div class="modal" id="activityDetailPopup" style="display: none">
-		<div class="modal-content">
-			<h2>Activity Details</h2>
-			<p><strong>Date:</strong> <span id="detailDate"></span></p>
-			<p><strong>Title:</strong> <span id="detailTitle"></span></p>
-			<p><strong>Description:</strong> <span id="detailDescription"></span></p>
-			<p><strong>Duration:</strong> <span id="detailTime"></span></p>
-			<p><strong>Distance:</strong> <span id="detailDistance"></span></p>
-			<p><strong>Type:</strong> <span id="detailType"></span></p>
-			<div id="detailRace" style="display: none">
-				<p><strong>Race Name:</strong> <span id="detailRaceName"></span></p>
-				<p><strong>Rank:</strong> <span id="detailRank"></span></p>
+	<div class="modal-content">
+		<form id="activityForm">
+			<label for="title">Title</label>
+			<input type="text" id="title" required aria-label="Activity title" />
+	
+			<label for="date">Date</label>
+			<input type="date" id="date" required aria-label="Activity date" />
+	
+			<label for="description">Description</label>
+			<textarea id="description" required aria-label="Activity description"></textarea>
+	
+			<label for="time">Duration (hours)</label>
+			<input type="number" id="time" required aria-label="Activity duration in hours" />
+	
+			<label for="distance">Distance (km)</label>
+			<input type="number" id="distance" required aria-label="Activity distance in kilometers" />
+	
+			<div id="raceDetails" style="display: none">
+				<label for="raceName">Race Name</label>
+				<input type="text" id="raceName" aria-label="Race name" />
+	
+				<label for="rank">Rank</label>
+				<input type="number" id="rank" aria-label="Race rank" />
 			</div>
-			<button id="closeDetailPopup" class="action-btn">Close</button>
-		</div>
+	
+			<button type="button" id="deleteDetailActivity">Delete</button>
+			<button type="submit" id="saveDetailActivity">Save</button>
+			<button type="button" id="cancelDetailActivity">Cancel</button>
+		</form>
+	</div>
 	</div>
 </main>
