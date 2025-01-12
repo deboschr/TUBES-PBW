@@ -52,7 +52,7 @@ public class ActivityController {
    }
 
    // Tambah activity baru
-   @PostMapping("/add")
+   @PostMapping("/activity")
    public ResponseEntity<String> addActivity(@ModelAttribute Activity activity, HttpSession session) {
       User user = (User) session.getAttribute("dataSession");
       if (user == null) {

@@ -3,12 +3,12 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 function setupEventListeners() {
-	const activityList = document.getElementById("activityList");
 	const addActivityBtn = document.getElementById("addActivityBtn");
-	const activityForm = document.getElementById("activityForm");
+	const addActivityForm = document.getElementById("add-activityForm");
 	const cancelActivityBtn = document.getElementById("cancelActivity");
-	const typeSelect = document.getElementById("type");
-	const raceDetails = document.getElementById("raceDetails");
+	const activityList = document.getElementById("activityList");
+	const typeSelect = document.getElementById("add-type"); // assuming you have a type field for race details
+	const raceDetails = document.getElementById("add-raceDetails");
 
 	addActivityBtn.addEventListener("click", () =>
 		openModal("activityFormPopup")
@@ -16,81 +16,78 @@ function setupEventListeners() {
 	cancelActivityBtn.addEventListener("click", () =>
 		closeModal("activityFormPopup")
 	);
+	addActivityForm.addEventListener("submit", handleFormSubmit);
+
+	typeSelect.addEventListener("change", () => {
+		raceDetails.style.display = typeSelect.value === "race" ? "block" : "none";
+	});
 
 	activityList.addEventListener("click", (event) => {
 		if (event.target.classList.contains("detailBtn")) {
 			const activityId = event.target.dataset.activityId;
 			showDetail(activityId);
-		} 
+		}
 	});
 
-	activityForm.addEventListener("submit", handleFormSubmit);
-
-	typeSelect.addEventListener("change", () => {
-		if (typeSelect.value === "race") {
-			raceDetails.style.display = "block";
-		} else {
-			raceDetails.style.display = "none";
+	const deleteDetailActivityBtn = document.getElementById(
+		"deleteDetailActivity"
+	);
+	deleteDetailActivityBtn.addEventListener("click", () => {
+		const activityId = document.getElementById("detail-activityForm").dataset
+			.activityId; // Ensure this dataset is set when populating the form
+		if (confirm("Are you sure you want to delete this activity?")) {
+			deleteActivity(activityId);
+			closeModal("activityDetailPopup");
 		}
 	});
 }
 
-
 function handleFormSubmit(event) {
 	event.preventDefault();
-	const formData = new FormData(event.target);
+	const form = event.target;
+	const formData = new FormData(form);
 	const activity = Object.fromEntries(formData);
+	const modalId = form.id.includes("add")
+		? "activityFormPopup"
+		: "activityDetailPopup";
+
 	if (activity.id) {
 		updateActivity(activity);
 	} else {
 		createActivity(activity);
-		closeModal("activityFormPopup");
 	}
+	closeModal(modalId);
 }
 
 function openModal(modalId) {
 	document.getElementById(modalId).style.display = "flex";
-	document.getElementById("activityForm").reset();
-	document.getElementById("raceDetails").style.display = "none";
+	if (modalId === "activityFormPopup") {
+		document.getElementById("add-activityForm").reset();
+		document.getElementById("add-raceDetails").style.display = "none";
+	}
 }
 
 function closeModal(modalId) {
 	document.getElementById(modalId).style.display = "none";
 }
 
-
 function showDetail(activityId) {
 	fetch(`/activity/${activityId}`)
 		.then((response) => response.json())
-		.then((activity) => populateDetailPopup(activity))
+		.then((activity) => populateFormDetail(activity))
 		.catch((error) => console.error("Error fetching activity details:", error));
 }
 
-function populateDetailPopup(activity) {
+function populateFormDetail(activity) {
+	document.getElementById("detail-title").value = activity.title;
+	document.getElementById("detail-date").value = activity.date;
+	document.getElementById("detail-description").value = activity.description;
+	document.getElementById("detail-time").value = activity.time;
+	document.getElementById("detail-distance").value = activity.distance;
+	document.getElementById("detail-type").value = activity.type;
 
-	// set value of form with activity here
-
-	// open model detail
 	openModal("activityDetailPopup");
 }
-
-function populateForm(activity) {
-	document.getElementById("title").value = activity.title;
-	document.getElementById("date").value = activity.date;
-	document.getElementById("description").value = activity.description;
-	document.getElementById("time").value = activity.time;
-	document.getElementById("distance").value = activity.distance;
-	document.getElementById("type").value = activity.type;
-
-	if (activity.type === "race") {
-		document.getElementById("raceDetails").style.display = "block";
-		document.getElementById("raceName").value = activity.raceName;
-		document.getElementById("rank").value = activity.rank;
-	} else {
-		document.getElementById("raceDetails").style.display = "none";
-	}
-}
-
 
 function createActivity(activity) {
 	fetch("/activity", {
@@ -115,13 +112,6 @@ function updateActivity(activity) {
 }
 
 function deleteActivity(activityId) {
-	document.getElementById("deleteDetailActivity").addEventListener("click", () => {
-  		const activityId = document.getElementById("activityForm").dataset.activityId;
-  		if (confirm("Are you sure you want to delete this activity?")) {
-    		deleteActivity(activityId);
-    		closeModal("activityDetailPopup");
-  		}
-	});
 	fetch(`/activity/${activityId}`, { method: "DELETE" })
 		.then(() => {
 			console.log("Activity deleted");
