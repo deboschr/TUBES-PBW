@@ -58,16 +58,17 @@ public class ActivityController {
 
    // Tambah activity baru
    @PostMapping("/activity")
-   public ResponseEntity<String> addActivity(@ModelAttribute Activity activity,
+   public String addActivity(@ModelAttribute Activity activity,
          @RequestParam("fileImage") MultipartFile file,
          HttpSession session) {
       User user = (User) session.getAttribute("dataSession");
+
       if (user == null) {
-         return ResponseEntity.status(HttpStatus.FORBIDDEN).body("Unauthorized");
+         return "redirect:/user/signin";
       }
 
       if (file.isEmpty()) {
-         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("No file uploaded");
+         return "redirect:/activity";
       }
 
       try {
@@ -80,13 +81,13 @@ public class ActivityController {
          activity.setImage(file.getOriginalFilename());
       } catch (IOException e) {
          e.printStackTrace();
-         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Failed to save image");
+         return "redirect:/activity";
       }
 
       activity.setPengguna(user);
       activityService.createActivity(activity);
 
-      return ResponseEntity.ok("Activity added successfully");
+      return "redirect:/activity";
    }
 
    // Ubah activity
