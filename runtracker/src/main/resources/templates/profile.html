@@ -1,51 +1,37 @@
 <main>
-	<div class="container">
-		<img
-			src="/img/profile.jpg"
-			alt="Profile Picture"
-			id="profilePicture"
-			class="profile-picture" />
-		<div class="info" id="profileName">Nama: John Doe</div>
-		<div class="info" id="profileEmail">Email: john.doe@example.com</div>
-		<div class="buttons">
-			<button class="edit-button" id="editButton">Edit</button>
-			<button class="delete-button" id="deleteButton">Hapus Akun</button>
-			<button class="logout-button" id="logoutButton">Log Out</button>
+	<div class="profile-container">
+		<h1>Profile</h1>
+		<p><strong>Name:</strong> <span id="profile-name" th:text="${user.name}">John Doe</span></p>
+		<p><strong>Email:</strong> <span id="profile-email" th:text="${user.email}">johndoe@gmail.com</span></p>
+		<div class="button-group">
+			<button id="edit-button">Edit</button>
+			<button id="delete-button">Delete Account</button>
+			<button id="logout-button">Log Out</button>
 		</div>
 	</div>
 
-	<div id="editModal" class="modal">
-		<div class="modal-content">
-			<span id="closeModal" class="close">&times;</span>
-			<h2>Edit Profil</h2>
-			<form id="editForm">
-				<div class="form-group">
-					<label for="editName">Nama</label>
-					<input type="text" id="editName" value="John Doe" />
-				</div>
-				<div class="form-group">
-					<label for="editEmail">Email</label>
-					<input type="email" id="editEmail" value="john.doe@example.com" />
-				</div>
-				<div class="form-group">
-					<label for="oldPassword">Password Lama</label>
-					<input type="password" id="oldPassword" />
-				</div>
-				<div class="form-group">
-					<label for="newPassword">Password Baru</label>
-					<input type="password" id="newPassword" />
-				</div>
-				<div class="form-group">
-					<label for="confirmPassword">Konfirmasi Password Baru</label>
-					<input type="password" id="confirmPassword" />
-				</div>
-				<div class="modal-buttons">
-					<button type="button" class="cancel-button" id="cancelEdit">
-						Batal
-					</button>
-					<button type="button" class="save-button" id="saveEdit">
-						Simpan
-					</button>
+	<div id="popup-form" class="popup">
+		<div class="popup-content">
+			<h2>Edit Profile</h2>
+			<form id="edit-form">
+				<label for="name">Name:</label>
+				<input type="text" id="name" th:value="${user.name}" required>
+
+				<label for="email">Email:</label>
+				<input type="email" id="email" th:value="${user.email}" required>
+
+				<label for="current-password">Current Password:</label>
+				<input type="password" id="current-password" required>
+
+				<label for="new-password">New Password:</label>
+				<input type="password" id="new-password" required>
+
+				<label for="confirm-password">Confirm New Password:</label>
+				<input type="password" id="confirm-password" required>
+
+				<div class="button-group">
+					<button type="submit" id="save-changes">Save Changes</button>
+					<button type="button" id="cancel">Cancel</button>
 				</div>
 			</form>
 		</div>

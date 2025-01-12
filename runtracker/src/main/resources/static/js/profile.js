@@ -1,52 +1,37 @@
-const editButton = document.getElementById("editButton");
-        const deleteButton = document.getElementById("deleteButton");
-        const logoutButton = document.getElementById("logoutButton");
-        const editModal = document.getElementById("editModal");
-        const closeModal = document.getElementById("closeModal");
-        const saveEdit = document.getElementById("saveEdit");
-        const cancelEdit = document.getElementById("cancelEdit");
 
-        editButton.onclick = () => {
-            editModal.style.display = "flex";
-        };
+document.addEventListener("DOMContentLoaded", () => {
+    const editButton = document.getElementById("edit-button");
+    const popup = document.getElementById("popup-form");
+    const cancelButton = document.getElementById("cancel");
+    const form = document.getElementById("edit-form");
+    const nameField = document.getElementById("name");
+    const emailField = document.getElementById("email");
+    const profileName = document.getElementById("profile-name");
+    const profileEmail = document.getElementById("profile-email");
 
-        closeModal.onclick = () => {
-            editModal.style.display = "none";
-        };
+    // Show popup
+    editButton.addEventListener("click", () => {
+        popup.style.display = "flex";
+    });
 
-        cancelEdit.onclick = () => {
-            editModal.style.display = "none";
-        };
+    // Close popup
+    cancelButton.addEventListener("click", () => {
+        popup.style.display = "none";
+    });
 
-        saveEdit.onclick = () => {
-            const newName = document.getElementById("editName").value;
-            const newEmail = document.getElementById("editEmail").value;
+    // Handle form submission
+    form.addEventListener("submit", (event) => {
+        event.preventDefault();
+        const newName = nameField.value;
+        const newEmail = emailField.value;
 
-            document.getElementById("profileName").innerText = `Nama: ${newName}`;
-            document.getElementById("profileEmail").innerText = `Email: ${newEmail}`;
-
-            const newPicture = document.getElementById("editPicture").files[0];
-            if (newPicture) {
-                const reader = new FileReader();
-                reader.onload = () => {
-                    document.getElementById("profilePicture").src = reader.result;
-                };
-                reader.readAsDataURL(newPicture);
-            }
-
-            editModal.style.display = "none";
-        };
-
-        deleteButton.onclick = () => {
-            if (confirm("Apakah Anda yakin ingin menghapus akun?")) {
-                alert("Akun berhasil dihapus.");
-                // Redirect ke halaman lain atau logout
-            }
-        };
-
-        logoutButton.onclick = () => {
-            if (confirm("Apakah Anda yakin ingin log out?")) {
-                alert("Berhasil log out.");
-                // Redirect ke halaman login
-            }
-        };
+        if (newName && newEmail) {
+            profileName.textContent = newName;
+            profileEmail.textContent = newEmail;
+            alert("Profile updated successfully!");
+            popup.style.display = "none";
+        } else {
+            alert("Please fill in all fields!");
+        }
+    });
+});
