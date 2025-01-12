@@ -46,17 +46,14 @@ function handleFormSubmit(event) {
 	event.preventDefault();
 	const form = event.target;
 	const formData = new FormData(form);
-	const activity = Object.fromEntries(formData);
-	const modalId = form.id.includes("add")
-		? "activityFormPopup"
-		: "activityDetailPopup";
 
-	if (activity.id) {
-		updateActivity(activity);
+	// Pastikan ID tidak ada atau null untuk kasus create
+	if (!formData.get("id")) {
+		createActivity(formData);
 	} else {
-		createActivity(activity);
+		updateActivity(formData);
 	}
-	closeModal(modalId);
+	closeModal(form.dataset.modalId);
 }
 
 function openModal(modalId) {
@@ -82,32 +79,35 @@ function populateFormDetail(activity) {
 	document.getElementById("detail-title").value = activity.title;
 	document.getElementById("detail-date").value = activity.date;
 	document.getElementById("detail-description").value = activity.description;
-	document.getElementById("detail-time").value = activity.time;
+	document.getElementById("detail-duration").value = activity.duration;
 	document.getElementById("detail-distance").value = activity.distance;
-	document.getElementById("detail-type").value = activity.type;
 
 	openModal("activityDetailPopup");
 }
 
-function createActivity(activity) {
+function createActivity(formData) {
 	fetch("/activity", {
 		method: "POST",
-		headers: { "Content-Type": "application/json" },
-		body: JSON.stringify(activity),
+		body: formData,
 	})
 		.then((response) => response.json())
-		.then((data) => console.log("Activity created:", data))
+		.then((data) => {
+			console.log("Activity created:", data);
+			closeModal("activityFormPopup");
+		})
 		.catch((error) => console.error("Error creating activity:", error));
 }
 
-function updateActivity(activity) {
-	fetch(`/activity/${activity.id}`, {
+function updateActivity(formData) {
+	const activityId = formData.get("id"); // Asumsikan id ada di dalam FormData
+	fetch(`/activity/${activityId}`, {
 		method: "PUT",
-		headers: { "Content-Type": "application/json" },
-		body: JSON.stringify(activity),
+		body: formData,
 	})
 		.then((response) => response.json())
-		.then((data) => console.log("Activity updated:", data))
+		.then((data) => {
+			console.log("Activity updated:", data);
+		})
 		.catch((error) => console.error("Error updating activity:", error));
 }
 

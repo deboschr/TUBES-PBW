@@ -10,6 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -53,14 +54,21 @@ public class ActivityController {
 
    // Tambah activity baru
    @PostMapping("/activity")
-   public ResponseEntity<String> addActivity(@ModelAttribute Activity activity, HttpSession session) {
+   public ResponseEntity<String> addActivity(@ModelAttribute Activity activity,
+         @RequestParam("image") MultipartFile file,
+         HttpSession session) {
       User user = (User) session.getAttribute("dataSession");
       if (user == null) {
-         return ResponseEntity.status(403).body("Unauthorized");
+         return ResponseEntity.status(HttpStatus.FORBIDDEN).body("Unauthorized");
+      }
+
+      // Check if file is not empty
+      if (file.isEmpty()) {
+         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("No file uploaded");
       }
 
       activity.setPengguna(user);
-      activityService.createActivity(activity);
+      activityService.createActivity(activity, file);
 
       return ResponseEntity.ok("Activity added successfully");
    }

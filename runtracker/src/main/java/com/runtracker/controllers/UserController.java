@@ -51,8 +51,6 @@ public class UserController {
       try {
          User user = userService.authenticate(email, password);
 
-         System.out.println("USER : " + user);
-
          session.setAttribute("dataSession", user);
 
          return "redirect:/dashboard";

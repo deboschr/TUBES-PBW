@@ -29,9 +29,11 @@ public class SecurityConfig {
             http
                         .csrf().disable()
                         .authorizeHttpRequests(auth -> auth
-                                    .requestMatchers("/", "/home", "/css/**", "/js/**", "/img/**", "/webjars/**")
+                                    .requestMatchers("/", "/home", "/css/**", "/js/**", "/img/**",
+                                                "/image/**", "/webjars/**")
                                     .permitAll()
-                                    .requestMatchers("/user/signup", "/user/signin").permitAll()
+                                    .requestMatchers("/user/signup", "/user/signin", "/upload", "/uploadStatus")
+                                    .permitAll()
                                     .anyRequest().authenticated())
                         .addFilterBefore(customSessionAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)
                         .sessionManagement(session -> session
