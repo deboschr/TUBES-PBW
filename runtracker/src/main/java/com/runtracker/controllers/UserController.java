@@ -71,7 +71,6 @@ public class UserController {
          }
 
          userService.createUser(user);
-         
          return "redirect:/user/signin";
       } catch (IllegalArgumentException e) {
          return "signup";
