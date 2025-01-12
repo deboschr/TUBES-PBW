@@ -95,3 +95,39 @@ select {
 #detailPhoto {
     margin: 10px 0;
 }
+
+.pagination {
+    position: absolute;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 300px;
+    /* Lebar container pagination */
+}
+
+.pagination button {
+    background-color: #ffcc00;
+    border: none;
+    padding: 10px 20px;
+    color: #000;
+    font-weight: bold;
+    cursor: pointer;
+    border-radius: 5px;
+    box-shadow: 0 3px 5px rgba(0, 0, 0, 0.2);
+    transition: all 0.3s ease;
+}
+
+.pagination button:hover {
+    background-color: #e6b800;
+    transform: scale(1.05);
+}
+
+.pagination span {
+    font-size: 14px;
+    color: #000;
+    font-weight: bold;
+    margin: 0 10px;
+}
