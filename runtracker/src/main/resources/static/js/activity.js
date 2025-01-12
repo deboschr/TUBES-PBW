@@ -69,7 +69,7 @@ function deleteActivity(activityId) {
 		.catch((error) => console.error("Error deleting activity:", error));
 }
 
-const pageSize = 5; // Jumlah item per halaman
+const pageSize = 7; // Jumlah item per halaman
 let currentPage = 1;
 let totalPages = 1;
 
