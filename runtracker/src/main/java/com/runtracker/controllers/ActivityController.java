@@ -12,6 +12,10 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.List;
 
 @Controller
@@ -55,20 +59,32 @@ public class ActivityController {
    // Tambah activity baru
    @PostMapping("/activity")
    public ResponseEntity<String> addActivity(@ModelAttribute Activity activity,
-         @RequestParam("image") MultipartFile file,
+         @RequestParam("fileImage") MultipartFile file,
          HttpSession session) {
       User user = (User) session.getAttribute("dataSession");
       if (user == null) {
          return ResponseEntity.status(HttpStatus.FORBIDDEN).body("Unauthorized");
       }
 
-      // Check if file is not empty
       if (file.isEmpty()) {
          return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("No file uploaded");
       }
 
+      try {
+         // Save the file to the server
+         byte[] bytes = file.getBytes();
+         Path path = Paths.get("src/main/resources/static/image/" + file.getOriginalFilename());
+         Files.write(path, bytes);
+
+         // Set the filename to the image field
+         activity.setImage(file.getOriginalFilename());
+      } catch (IOException e) {
+         e.printStackTrace();
+         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Failed to save image");
+      }
+
       activity.setPengguna(user);
-      activityService.createActivity(activity, file);
+      activityService.createActivity(activity);
 
       return ResponseEntity.ok("Activity added successfully");
    }

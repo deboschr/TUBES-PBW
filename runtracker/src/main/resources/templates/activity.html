@@ -37,7 +37,11 @@
 	<!-- Add Activity Modal -->
 	<div class="modal" id="activityFormPopup" style="display: none">
 		<div class="modal-content">
-			<form id="add-activityForm">
+			<form
+				id="add-activityForm"
+				method="POST"
+				action="/activity"
+				enctype="multipart/form-data">
 				<label for="add-title">Title</label>
 				<input
 					type="text"
@@ -81,7 +85,7 @@
 				<input
 					type="file"
 					id="add-image"
-					name="image"
+					name="fileImage"
 					required
 					aria-label="Activity image" />
 

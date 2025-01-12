@@ -14,8 +14,6 @@ import java.nio.file.Paths;
 @Controller
 public class IndexController {
 
-   private static String UPLOADED_FOLDER = "src/main/resources/static/image/";
-
    @RequestMapping("/upload")
    public String index() {
       return "upload";
@@ -32,7 +30,7 @@ public class IndexController {
 
       try {
          byte[] bytes = file.getBytes();
-         Path path = Paths.get(UPLOADED_FOLDER + file.getOriginalFilename());
+         Path path = Paths.get("src/main/resources/static/image/" + file.getOriginalFilename());
          Files.write(path, bytes);
 
          redirectAttributes.addFlashAttribute("message",

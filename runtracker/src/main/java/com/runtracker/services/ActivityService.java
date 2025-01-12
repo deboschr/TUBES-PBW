@@ -3,13 +3,15 @@ package com.runtracker.services;
 import com.runtracker.dao.ActivityDAO;
 import com.runtracker.models.Activity;
 import com.runtracker.models.User;
-import com.runtracker.utils.FileStorageUtils;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.List;
 import java.util.Optional;
 
@@ -18,9 +20,6 @@ public class ActivityService {
 
    @Autowired
    private ActivityDAO activityDAO;
-
-   @Autowired
-   private FileStorageUtils fileStorageUtils;
 
    public List<Activity> getActivitiesByUser(User user) {
       List<Activity> activities = activityDAO.findByUser(user);
@@ -39,15 +38,7 @@ public class ActivityService {
       return activityDAO.findById(id).orElseThrow(() -> new IllegalArgumentException("Activity not found"));
    }
 
-   public void createActivity(Activity activity, MultipartFile file) {
-      if (file != null && !file.isEmpty()) {
-         try {
-            String fileName = fileStorageUtils.storeFile(file);
-            activity.setImage(fileName);
-         } catch (IOException e) {
-            throw new RuntimeException("Failed to store file", e);
-         }
-      }
+   public void createActivity(Activity activity) {
       activityDAO.save(activity);
    }
 
