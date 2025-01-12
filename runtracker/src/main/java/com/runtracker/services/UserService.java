@@ -2,6 +2,9 @@ package com.runtracker.services;
 
 import com.runtracker.models.User;
 import com.runtracker.repositories.UserRepository;
+
+import jakarta.transaction.Transactional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -9,6 +12,7 @@ import org.springframework.stereotype.Service;
 import java.util.Optional;
 
 @Service
+// @Transactional
 public class UserService {
 
    @Autowired

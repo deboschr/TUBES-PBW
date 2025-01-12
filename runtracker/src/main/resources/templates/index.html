@@ -8,7 +8,7 @@
 	</head>
 	<body>
 		<!-- Navbar -->
-		<div th:insert="fragments/navbar :: navbar"></div>
+		<div th:insert="~{fragments/navbar :: navbar}"></div>
 
 		<!-- Main Content -->
 		<main th:insert="~{${page}}"></main>

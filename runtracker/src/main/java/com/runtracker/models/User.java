@@ -3,6 +3,7 @@ package com.runtracker.models;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 import java.util.Set;
 
@@ -10,6 +11,7 @@ import java.util.Set;
 @Table(name = "pengguna")
 @Data
 @NoArgsConstructor
+@ToString(exclude = { "activities", "createdRaces", "updatedRaces", "memberRaces" })
 public class User {
 
    @Id

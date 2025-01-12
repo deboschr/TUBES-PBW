@@ -57,13 +57,14 @@ public class UserController {
          // Proses signin melalui service
          User user = userService.authenticate(email, password);
 
+         System.out.println("USER :" + user);
+         System.out.println("USER ACTIVITIES" + user.getActivities());
+
          // Simpan pengguna yang berhasil login ke session
          session.setAttribute("dataSession", user);
 
-         System.out.println(session.getAttribute("dataSession"));
-
          // Redirect ke halaman profile setelah berhasil signin
-         return "redirect:/user/profile";
+         return "redirect:/dashboard";
       } catch (IllegalArgumentException e) {
          // Tangani error dari service dan tampilkan pesan ke pengguna
          model.addAttribute("error", e.getMessage());
