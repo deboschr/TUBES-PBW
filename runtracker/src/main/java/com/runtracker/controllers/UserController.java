@@ -3,6 +3,8 @@ package com.runtracker.controllers;
 import com.runtracker.models.User;
 import com.runtracker.services.UserService;
 import jakarta.servlet.http.HttpSession;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -12,6 +14,7 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/user")
 public class UserController {
 
+   @Autowired
    private final UserService userService;
 
    public UserController(UserService userService) {
@@ -47,7 +50,11 @@ public class UserController {
    public String signin(@RequestParam String email, @RequestParam String password, HttpSession session, Model model) {
       try {
          User user = userService.authenticate(email, password);
+
+         System.out.println("USER : " + user);
+
          session.setAttribute("dataSession", user);
+
          return "redirect:/dashboard";
       } catch (IllegalArgumentException e) {
          model.addAttribute("error", e.getMessage());
@@ -57,13 +64,18 @@ public class UserController {
 
    @PostMapping("/signup")
    public String signup(@ModelAttribute User user, Model model) {
-      if (userService.isEmailTaken(user.getEmail())) {
-         model.addAttribute("error", "Email is already in use.");
+      try {
+         if (userService.isEmailTaken(user.getEmail())) {
+            model.addAttribute("error", "Email is already in use.");
+            return "signup";
+         }
+
+         userService.createUser(user);
+         return "redirect:/user/signin";
+      } catch (IllegalArgumentException e) {
          return "signup";
       }
 
-      userService.createUser(user);
-      return "redirect:/user/signin";
    }
 
    @PostMapping("/signout")

@@ -9,7 +9,23 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+import org.springframework.stereotype.Repository;
+
+@Repository
 public class RaceDAO extends DatabaseConfig {
+
+   public boolean existsById(Long id) {
+      String sql = "SELECT 1 FROM race WHERE race_id = ?";
+      try (Connection conn = getConnection();
+            PreparedStatement stmt = conn.prepareStatement(sql)) {
+         stmt.setLong(1, id);
+         ResultSet rs = stmt.executeQuery();
+         return rs.next();
+      } catch (SQLException e) {
+         e.printStackTrace();
+      }
+      return false;
+   }
 
    public Optional<Race> findById(Long id) {
       String sql = "SELECT * FROM race WHERE race_id = ?";

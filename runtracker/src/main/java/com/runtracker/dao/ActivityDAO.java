@@ -7,7 +7,11 @@ import com.runtracker.models.User;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
+import org.springframework.stereotype.Repository;
+
+@Repository
 public class ActivityDAO extends DatabaseConfig {
 
    public List<Activity> findByUser(User user) {
@@ -29,6 +33,21 @@ public class ActivityDAO extends DatabaseConfig {
       return activities;
    }
 
+   public Optional<Activity> findById(long id) {
+      String sql = "SELECT * FROM activity WHERE activity_id = ?";
+      try (Connection conn = getConnection();
+            PreparedStatement stmt = conn.prepareStatement(sql)) {
+         stmt.setLong(1, id);
+         ResultSet rs = stmt.executeQuery();
+         if (rs.next()) {
+            return Optional.of(mapRowToActivity(rs));
+         }
+      } catch (SQLException e) {
+         e.printStackTrace();
+      }
+      return Optional.empty();
+   }
+
    public void save(Activity activity) {
       String sql = "INSERT INTO activity (pengguna_id, title, description, duration, distance, created_at) VALUES (?, ?, ?, ?, ?, ?)";
       try (Connection conn = getConnection();
@@ -40,6 +59,24 @@ public class ActivityDAO extends DatabaseConfig {
          stmt.setDouble(4, activity.getDuration());
          stmt.setDouble(5, activity.getDistance());
          stmt.setLong(6, System.currentTimeMillis());
+         stmt.executeUpdate();
+
+      } catch (SQLException e) {
+         e.printStackTrace();
+      }
+   }
+
+   public void update(Activity activity) {
+      String sql = "UPDATE activity SET title = ?, description = ?, duration = ?, distance = ?, updated_at = ? WHERE activity_id = ?";
+      try (Connection conn = getConnection();
+            PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+         stmt.setString(1, activity.getTitle());
+         stmt.setString(2, activity.getDescription());
+         stmt.setDouble(3, activity.getDuration());
+         stmt.setDouble(4, activity.getDistance());
+         stmt.setLong(5, activity.getUpdatedAt());
+         stmt.setLong(6, activity.getId());
          stmt.executeUpdate();
 
       } catch (SQLException e) {

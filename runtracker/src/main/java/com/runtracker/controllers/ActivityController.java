@@ -2,84 +2,77 @@ package com.runtracker.controllers;
 
 import com.runtracker.models.Activity;
 import com.runtracker.models.User;
-// import com.runtracker.services.ActivityService;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.runtracker.services.ActivityService;
+import jakarta.servlet.http.HttpSession;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import jakarta.servlet.http.HttpSession;
-
 import java.util.List;
 
 @Controller
+@RequestMapping("/activity")
 public class ActivityController {
 
-   @Autowired
-   // private ActivityService activityService;
+   private final ActivityService activityService;
+
+   public ActivityController(ActivityService activityService) {
+      this.activityService = activityService;
+   }
 
    // Render halaman activity
-   @GetMapping("/activity")
+   @GetMapping
    public String renderActivityPage(HttpSession session, Model model) {
       User user = (User) session.getAttribute("dataSession");
-
       if (user == null) {
          return "redirect:/user/signin";
       }
 
-      // List<Activity> activities = activityService.getActivitiesByUser(user);
+      List<Activity> activities = activityService.getActivitiesByUser(user);
 
-
-      model.addAttribute("title", "Activity");
+      model.addAttribute("title", "Activities");
       model.addAttribute("page", "activity");
-      model.addAttribute("user", user);
-      // model.addAttribute("activities", activities);
+      model.addAttribute("activities", activities);
 
       return "index";
    }
 
-   // // Create new activity
-   // @PostMapping("/activity")
-   // public String createActivity(@ModelAttribute Activity activity, HttpSession session) {
-   //    User user = (User) session.getAttribute("dataSession");
+   // Tambah activity baru
+   @PostMapping("/add")
+   public ResponseEntity<String> addActivity(@ModelAttribute Activity activity, HttpSession session) {
+      User user = (User) session.getAttribute("dataSession");
+      if (user == null) {
+         return ResponseEntity.status(403).body("Unauthorized");
+      }
 
-   //    if (user == null) {
-   //       return "redirect:/user/signin";
-   //    }
+      activity.setPengguna(user);
+      activityService.createActivity(activity);
+      return ResponseEntity.ok("Activity added successfully");
+   }
 
-   //    activity.setPengguna(user);
-   //    activity.setCreatedAt(System.currentTimeMillis());
-   //    activity.setUpdatedAt(System.currentTimeMillis());
-   //    activityService.createActivity(activity);
+   // Ubah activity
+   @PutMapping("/update/{id}")
+   public ResponseEntity<String> updateActivity(@PathVariable Long id, @ModelAttribute Activity updatedActivity,
+         HttpSession session) {
+      User user = (User) session.getAttribute("dataSession");
+      if (user == null) {
+         return ResponseEntity.status(403).body("Unauthorized");
+      }
 
-   //    return "redirect:/activity";
-   // }
+      activityService.updateActivity(id, updatedActivity);
+      return ResponseEntity.ok("Activity updated successfully");
+   }
 
-   // // Update activity
-   // @PatchMapping("/activity/{id}")
-   // public String updateActivity(@PathVariable Long id, @ModelAttribute Activity activity, HttpSession session) {
-   //    User user = (User) session.getAttribute("dataSession");
+   // Hapus activity
+   @DeleteMapping("/delete/{id}")
+   public ResponseEntity<String> deleteActivity(@PathVariable Long id, HttpSession session) {
+      User user = (User) session.getAttribute("dataSession");
+      if (user == null) {
+         return ResponseEntity.status(403).body("Unauthorized");
+      }
 
-   //    if (user == null) {
-   //       return "redirect:/user/signin";
-   //    }
-
-   //    activityService.updateActivity(id, activity);
-
-   //    return "redirect:/activity";
-   // }
-
-   // // Delete activity
-   // @DeleteMapping("/activity/{id}")
-   // public String deleteActivity(@PathVariable Long id, HttpSession session) {
-   //    User user = (User) session.getAttribute("dataSession");
-
-   //    if (user == null) {
-   //       return "redirect:/user/signin";
-   //    }
-
-   //    activityService.deleteActivity(id);
-
-   //    return "redirect:/activity";
-   // }
+      activityService.deleteActivity(id);
+      return ResponseEntity.ok("Activity deleted successfully");
+   }
 }
