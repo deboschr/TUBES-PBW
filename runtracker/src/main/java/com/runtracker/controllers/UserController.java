@@ -83,14 +83,23 @@ public class UserController {
    }
 
    @PutMapping("/profile")
-   public ResponseEntity<String> updateProfile(@ModelAttribute User userDetails, HttpSession session) {
+   public ResponseEntity<String> updateProfile(
+         @RequestParam String name,
+         @RequestParam String email,
+         @RequestParam("current-password") String currentPassword,
+         @RequestParam("new-password") String newPassword,
+         HttpSession session) {
       User sessionUser = (User) session.getAttribute("dataSession");
       if (sessionUser == null) {
          return ResponseEntity.status(403).body("Unauthorized");
       }
 
-      userService.updateProfile(sessionUser.getId(), userDetails);
-      return ResponseEntity.ok("Profile updated successfully");
+      boolean isUpdated = userService.updateProfile(sessionUser.getId(), name, email, currentPassword, newPassword);
+      if (isUpdated) {
+         return ResponseEntity.ok("Profile updated successfully");
+      } else {
+         return ResponseEntity.badRequest().body("Update failed. Invalid current password or other issue.");
+      }
    }
 
    @DeleteMapping("/profile")

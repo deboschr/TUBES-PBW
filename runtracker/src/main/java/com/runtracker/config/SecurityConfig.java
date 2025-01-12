@@ -8,6 +8,8 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.security.web.authentication.LoginUrlAuthenticationEntryPoint;
+import org.springframework.security.web.authentication.Http403ForbiddenEntryPoint;
 
 @Configuration
 public class SecurityConfig {
@@ -35,11 +37,15 @@ public class SecurityConfig {
                                     .requestMatchers("/user/signup", "/user/signin", "/upload", "/uploadStatus")
                                     .permitAll()
                                     .anyRequest().authenticated())
-
                         .addFilterBefore(customSessionAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)
                         .sessionManagement(session -> session
                                     .maximumSessions(1)) // Hanya 1 sesi aktif per pengguna
-                        .formLogin().disable(); // Nonaktifkan login bawaan Spring Security
+                        .formLogin().disable() // Nonaktifkan login bawaan Spring Security
+                        .exceptionHandling(exception -> exception
+                                    .authenticationEntryPoint(new LoginUrlAuthenticationEntryPoint("/user/signin"))
+                                    .accessDeniedHandler((request, response, accessDeniedException) -> {
+                                          response.sendRedirect("/user/signin");
+                                    }));
 
             return http.build();
       }
