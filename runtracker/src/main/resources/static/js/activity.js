@@ -34,6 +34,26 @@ function setupEventListeners() {
 	});
 }
 
+<<<<<<< HEAD
+=======
+function handleFormSubmit(event) {
+	event.preventDefault();
+	const form = event.target;
+	const formData = new FormData(form);
+	const activity = Object.fromEntries(formData);
+	const modalId = form.id.includes("add")
+		? "activityFormPopup"
+		: "activityDetailPopup";
+
+	if (activity.id) {
+		updateActivity(activity);
+	} else {
+		createActivity(activity);
+	}
+	closeModal(modalId);
+}
+
+>>>>>>> parent of 50bc43b (ada)
 function openModal(modalId) {
 	document.getElementById(modalId).style.display = "flex";
 }
@@ -53,12 +73,38 @@ function populateFormDetail(activity) {
 	document.getElementById("detail-title").value = activity.title;
 	document.getElementById("detail-date").value = activity.date;
 	document.getElementById("detail-description").value = activity.description;
-	document.getElementById("detail-duration").value = activity.duration;
+	document.getElementById("detail-time").value = activity.time;
 	document.getElementById("detail-distance").value = activity.distance;
+	document.getElementById("detail-type").value = activity.type;
 
 	openModal("activityDetailPopup");
 }
 
+<<<<<<< HEAD
+=======
+function createActivity(activity) {
+	fetch("/activity", {
+		method: "POST",
+		headers: { "Content-Type": "application/json" },
+		body: JSON.stringify(activity),
+	})
+		.then((response) => response.json())
+		.then((data) => console.log("Activity created:", data))
+		.catch((error) => console.error("Error creating activity:", error));
+}
+
+function updateActivity(activity) {
+	fetch(`/activity/${activity.id}`, {
+		method: "PUT",
+		headers: { "Content-Type": "application/json" },
+		body: JSON.stringify(activity),
+	})
+		.then((response) => response.json())
+		.then((data) => console.log("Activity updated:", data))
+		.catch((error) => console.error("Error updating activity:", error));
+}
+
+>>>>>>> parent of 50bc43b (ada)
 function deleteActivity(activityId) {
 	fetch(`/activity/${activityId}`, { method: "DELETE" })
 		.then(() => {

@@ -10,7 +10,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -58,12 +57,17 @@ public class ActivityController {
 
    // Tambah activity baru
    @PostMapping("/activity")
+<<<<<<< HEAD
    public String addActivity(@ModelAttribute Activity activity,
          @RequestParam("fileImage") MultipartFile file,
          HttpSession session) {
+=======
+   public ResponseEntity<String> addActivity(@ModelAttribute Activity activity, HttpSession session) {
+>>>>>>> parent of 50bc43b (ada)
       User user = (User) session.getAttribute("dataSession");
 
       if (user == null) {
+<<<<<<< HEAD
          return "redirect:/user/signin";
       }
 
@@ -82,6 +86,9 @@ public class ActivityController {
       } catch (IOException e) {
          e.printStackTrace();
          return "redirect:/activity";
+=======
+         return ResponseEntity.status(403).body("Unauthorized");
+>>>>>>> parent of 50bc43b (ada)
       }
 
       activity.setPengguna(user);

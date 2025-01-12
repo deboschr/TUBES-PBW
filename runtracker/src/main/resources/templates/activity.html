@@ -20,7 +20,7 @@
 			<tbody id="activityList">
 				<tr th:each="activity : ${activities}">
 					<td th:text="${activity.title}"></td>
-					<td th:text="${activity.date}"></td>
+					<td th:text="${#dates.format(activity.createdAt, 'dd-MM-yyyy')}"></td>
 					<td th:text="${activity.duration}"></td>
 					<td th:text="${activity.distance}"></td>
 					<td th:text="${activity.type}"></td>
@@ -34,7 +34,7 @@
 		</table>
 	</div>
 
-	<!-- Add Activity Modal -->
+	<!-- Add/Edit Activity Modal -->
 	<div class="modal" id="activityFormPopup" style="display: none">
 		<div class="modal-content">
 			<form
@@ -46,22 +46,15 @@
 				<input
 					type="text"
 					id="add-title"
-					name="title"
 					required
 					aria-label="Activity title" />
 
 				<label for="add-date">Date</label>
-				<input
-					type="date"
-					id="add-date"
-					name="date"
-					required
-					aria-label="Activity date" />
+				<input type="date" id="add-date" required aria-label="Activity date" />
 
 				<label for="add-description">Description</label>
 				<textarea
 					id="add-description"
-					name="description"
 					required
 					aria-label="Activity description"></textarea>
 
@@ -69,7 +62,6 @@
 				<input
 					type="number"
 					id="add-time"
-					name="duration"
 					required
 					aria-label="Activity duration in hours" />
 
@@ -77,10 +69,10 @@
 				<input
 					type="number"
 					id="add-distance"
-					name="distance"
 					required
 					aria-label="Activity distance in kilometers" />
 
+<<<<<<< HEAD
 				<label for="add-image">Image</label>
 				<input
 					type="file"
@@ -89,20 +81,14 @@
 					required
 					aria-label="Activity image" />
 
+=======
+>>>>>>> parent of 50bc43b (ada)
 				<div id="add-raceDetails" style="display: none">
 					<label for="add-raceName">Race Name</label>
-					<input
-						type="text"
-						id="add-raceName"
-						name="raceName"
-						aria-label="Race name" />
+					<input type="text" id="add-raceName" aria-label="Race name" />
 
 					<label for="add-rank">Rank</label>
-					<input
-						type="number"
-						id="add-rank"
-						name="rank"
-						aria-label="Race rank" />
+					<input type="number" id="add-rank" aria-label="Race rank" />
 				</div>
 
 				<button type="submit" id="saveActivity">Save</button>

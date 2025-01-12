@@ -6,12 +6,14 @@ import com.runtracker.models.User;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.multipart.MultipartFile;
 
+<<<<<<< HEAD
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+=======
+>>>>>>> parent of 50bc43b (ada)
 import java.util.List;
 import java.util.Optional;
 
@@ -21,6 +23,13 @@ public class ActivityService {
    @Autowired
    private ActivityDAO activityDAO;
 
+<<<<<<< HEAD
+=======
+   public ActivityService(ActivityDAO activityDAO) {
+      this.activityDAO = activityDAO;
+   }
+
+>>>>>>> parent of 50bc43b (ada)
    public List<Activity> getActivitiesByUser(User user) {
       List<Activity> activities = activityDAO.findByUser(user);
 
@@ -39,6 +48,10 @@ public class ActivityService {
    }
 
    public void createActivity(Activity activity) {
+<<<<<<< HEAD
+=======
+      activity.setCreatedAt(System.currentTimeMillis());
+>>>>>>> parent of 50bc43b (ada)
       activityDAO.save(activity);
    }
 

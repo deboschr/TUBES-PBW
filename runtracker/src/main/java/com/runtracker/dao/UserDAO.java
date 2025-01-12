@@ -65,14 +65,14 @@ public class UserDAO extends DatabaseConfig {
    }
 
    public void save(User user) {
-      String sql = "INSERT INTO pengguna (name, email, password, role, created_at) VALUES (?, ?, ?, ?, ?)";
+      String sql = "INSERT INTO pengguna (name, email, password, role, created_at) VALUES (?, ?, ?, ?::enum_pengguna_role, ?)";
       try (Connection conn = getConnection();
             PreparedStatement stmt = conn.prepareStatement(sql)) {
 
          stmt.setString(1, user.getName());
          stmt.setString(2, user.getEmail());
          stmt.setString(3, user.getPassword());
-         stmt.setString(4, user.getRole().name());
+         stmt.setString(4, user.getRole().name()); // Ensure this matches the enum values in the DB
          stmt.setLong(5, System.currentTimeMillis());
          stmt.executeUpdate();
 

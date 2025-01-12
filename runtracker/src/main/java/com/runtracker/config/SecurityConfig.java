@@ -29,11 +29,16 @@ public class SecurityConfig {
             http
                         .csrf().disable()
                         .authorizeHttpRequests(auth -> auth
+<<<<<<< HEAD
                                     .requestMatchers("/", "/home", "/css/**", "/js/**", "/img/**", "/image/**",
                                                 "/webjars/**")
                                     .permitAll()
                                     .requestMatchers("/user/signup", "/user/signin", "/upload", "/uploadStatus")
+=======
+                                    .requestMatchers("/", "/home", "/css/**", "/js/**", "/img/**", "/webjars/**")
+>>>>>>> parent of 50bc43b (ada)
                                     .permitAll()
+                                    .requestMatchers("/user/signup", "/user/signin").permitAll()
                                     .anyRequest().authenticated())
 
                         .addFilterBefore(customSessionAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)

@@ -2,7 +2,8 @@ package com.runtracker.services;
 
 import com.runtracker.dao.UserDAO;
 import com.runtracker.models.User;
-import org.springframework.beans.factory.annotation.*;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
@@ -13,9 +14,12 @@ public class UserService {
    @Autowired
    private UserDAO userDAO;
 
+   // Using BCryptPasswordEncoder to hash and verify passwords
+   private BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+
    public User authenticate(String email, String password) {
       Optional<User> userOpt = userDAO.findByEmail(email);
-      if (userOpt.isEmpty() || !password.equals(userOpt.get().getPassword())) {
+      if (userOpt.isEmpty() || !passwordEncoder.matches(password, userOpt.get().getPassword())) {
          throw new IllegalArgumentException("Invalid email or password.");
       }
       return userOpt.get();
@@ -29,6 +33,8 @@ public class UserService {
       if (isEmailTaken(user.getEmail())) {
          throw new IllegalArgumentException("Email is already in use.");
       }
+      // Hashing the password before saving the user
+      user.setPassword(passwordEncoder.encode(user.getPassword()));
       userDAO.save(user);
    }
 
@@ -40,7 +46,8 @@ public class UserService {
       existingUser.setEmail(updatedDetails.getEmail());
 
       if (updatedDetails.getPassword() != null && !updatedDetails.getPassword().isEmpty()) {
-         existingUser.setPassword(updatedDetails.getPassword());
+         // Hashing new password before updating
+         existingUser.setPassword(passwordEncoder.encode(updatedDetails.getPassword()));
       }
 
       userDAO.update(existingUser);
