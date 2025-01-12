@@ -12,7 +12,7 @@ public class User {
    private String name;
    private String email;
    private String password;
-   private Role role;
+   private String role;
    private Long createdAt;
    private Long updatedAt;
 
@@ -20,8 +20,4 @@ public class User {
    private Set<Race> createdRaces;
    private Set<Race> updatedRaces;
    private Set<MemberRace> memberRaces;
-
-   public enum Role {
-      MEMBER, ADMIN
-   }
 }

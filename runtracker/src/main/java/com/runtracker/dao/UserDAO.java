@@ -72,7 +72,7 @@ public class UserDAO extends DatabaseConfig {
          stmt.setString(1, user.getName());
          stmt.setString(2, user.getEmail());
          stmt.setString(3, user.getPassword());
-         stmt.setString(4, user.getRole().name());
+         stmt.setString(4, user.getRole());
          stmt.setLong(5, System.currentTimeMillis());
          stmt.executeUpdate();
 
@@ -89,7 +89,7 @@ public class UserDAO extends DatabaseConfig {
          stmt.setString(1, user.getName());
          stmt.setString(2, user.getEmail());
          stmt.setString(3, user.getPassword());
-         stmt.setString(4, user.getRole().name());
+         stmt.setString(4, user.getRole());
          stmt.setLong(5, System.currentTimeMillis());
          stmt.setLong(6, user.getId());
          stmt.executeUpdate();
@@ -118,7 +118,7 @@ public class UserDAO extends DatabaseConfig {
       user.setName(rs.getString("name"));
       user.setEmail(rs.getString("email"));
       user.setPassword(rs.getString("password"));
-      user.setRole(User.Role.valueOf(rs.getString("role")));
+      user.setRole(rs.getString("role"));
       user.setCreatedAt(rs.getLong("created_at"));
       user.setUpdatedAt(rs.getLong("updated_at"));
       return user;
