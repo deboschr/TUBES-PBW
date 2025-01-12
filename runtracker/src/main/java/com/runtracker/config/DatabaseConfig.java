@@ -5,7 +5,6 @@ import com.zaxxer.hikari.HikariDataSource;
 
 import java.sql.Connection;
 import java.sql.SQLException;
-import javax.sql.DataSource;
 
 public abstract class DatabaseConfig {
 
