@@ -21,7 +21,20 @@ public class ActivityService {
    }
 
    public List<Activity> getActivitiesByUser(User user) {
-      return activityDAO.findByUser(user);
+      List<Activity> activities = activityDAO.findByUser(user);
+
+      // Pastikan semua aktivitas memiliki tipe yang benar
+      for (Activity activity : activities) {
+         if (activity.getType() == null || activity.getType().isEmpty()) {
+            activity.setType("Exercise");
+         }
+      }
+
+      return activities;
+   }
+
+   public Activity getActivityDetail(long id) {
+      return activityDAO.findById(id).orElseThrow(() -> new IllegalArgumentException("Activity not found"));
    }
 
    public void createActivity(Activity activity) {
