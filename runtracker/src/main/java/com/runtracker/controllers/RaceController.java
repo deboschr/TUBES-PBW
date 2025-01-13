@@ -30,8 +30,13 @@ public class RaceController {
 
       List<Race> races = raceService.getRacesByCreator(user);
 
+      String page = "race";
+      if ("ADMIN".equals(user.getRole())) {
+         page = "admin-race";
+      }
+
       model.addAttribute("title", "Races");
-      model.addAttribute("page", "race");
+      model.addAttribute("page", page);
       model.addAttribute("races", races);
 
       return "index";

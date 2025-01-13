@@ -6,6 +6,11 @@ import org.springframework.web.bind.annotation.*;
 
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
+import com.runtracker.models.User;
+
+import jakarta.servlet.http.HttpSession;
+
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -13,40 +18,6 @@ import java.nio.file.Paths;
 
 @Controller
 public class IndexController {
-
-   @RequestMapping("/upload")
-   public String index() {
-      return "upload";
-   }
-
-   @PostMapping("/upload")
-   public String singleFileUpload(@RequestParam("file") MultipartFile file,
-         RedirectAttributes redirectAttributes) {
-
-      if (file.isEmpty()) {
-         redirectAttributes.addFlashAttribute("message", "Please select a file to upload");
-         return "redirect:uploadStatus";
-      }
-
-      try {
-         byte[] bytes = file.getBytes();
-         Path path = Paths.get("src/main/resources/static/image/" + file.getOriginalFilename());
-         Files.write(path, bytes);
-
-         redirectAttributes.addFlashAttribute("message",
-               "You successfully uploaded '" + file.getOriginalFilename() + "'");
-
-      } catch (IOException e) {
-         e.printStackTrace();
-      }
-
-      return "redirect:/uploadStatus";
-   }
-
-   @RequestMapping("/uploadStatus")
-   public String uploadStatus() {
-      return "uploadStatus";
-   }
 
    // Render halaman home
    @GetMapping("/")
@@ -64,9 +35,19 @@ public class IndexController {
 
    // Render halaman dashboard member
    @GetMapping("/dashboard")
-   public String renderDashboardPage(Model model) {
+   public String renderDashboardPage(Model model, HttpSession session) {
+      User user = (User) session.getAttribute("dataSession");
+
+      if (user == null) {
+         return "redirect:/user/signin";
+      }
+      String page = "dashboard";
+      if ("ADMIN".equals(user.getRole())) {
+         page = "admin-dashboard";
+      }
+
       model.addAttribute("title", "Dashboard"); // Judul halaman
-      model.addAttribute("page", "dashboard"); // Nama halaman
+      model.addAttribute("page", page); // Nama halaman
       return "index";
    }
 }
