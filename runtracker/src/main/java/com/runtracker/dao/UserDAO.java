@@ -72,7 +72,14 @@ public class UserDAO extends DatabaseConfig {
          stmt.setString(1, user.getName());
          stmt.setString(2, user.getEmail());
          stmt.setString(3, user.getPassword());
-         stmt.setString(4, user.getRole());
+
+         // Check if the role is not set or is empty and default to "MEMBER"
+         String role = user.getRole();
+         if (role == null || role.isEmpty()) {
+            role = "MEMBER";
+         }
+         stmt.setString(4, role);
+
          stmt.setLong(5, System.currentTimeMillis());
          stmt.executeUpdate();
 
