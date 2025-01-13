@@ -85,6 +85,7 @@ public class ActivityController {
       }
 
       activity.setPengguna(user);
+      
       activityService.createActivity(activity);
 
       return "redirect:/activity";
