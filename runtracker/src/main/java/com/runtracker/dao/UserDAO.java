@@ -33,6 +33,9 @@ public class UserDAO extends DatabaseConfig {
    public Optional<User> findByEmail(String email) {
       String sql = "SELECT * FROM pengguna WHERE email = ?";
       try (Connection conn = getConnection();
+
+
+      
             PreparedStatement stmt = conn.prepareStatement(sql)) {
 
          stmt.setString(1, email);
