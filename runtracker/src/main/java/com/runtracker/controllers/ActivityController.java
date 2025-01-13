@@ -74,7 +74,7 @@ public class ActivityController {
       try {
          // Save the file to the server
          byte[] bytes = file.getBytes();
-         Path path = Paths.get("src/main/resources/static/image/" + file.getOriginalFilename());
+         Path path = Paths.get("runtracker/src/main/resources/static/image/" + file.getOriginalFilename());
          Files.write(path, bytes);
 
          // Set the filename to the image field
